@@ -6,15 +6,21 @@
 	<meta name="language" content="en">
 
 	<!-- blueprint CSS framework -->
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print">
+        <link rel="stylesheet" type="text/css" href="<?php echo app::baseUrl(false, "/css/", "screen.css"); ?>" media="screen, projection">
+	<link rel="stylesheet" type="text/css" href="<?php echo app::baseUrl(false, "/css/", "print.css"); ?>" media="print">
 	<!--[if lt IE 8]>
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection">
 	<![endif]-->
 
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo app::baseUrl(false, "/css/", "main.css"); ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo app::baseUrl(false, "/css/", "form.css"); ?>">
 
+        <?php echo CGoogleApi::init(); ?>
+        <?php echo CHtml::script(
+            CGoogleApi::load('jquery') . "\n" .
+            CGoogleApi::load("jqueryui")
+        ); ?>
+        <?php Yii::app()->clientScript->registerScriptFile(app::baseUrl(false, "/js/", "main.js"), CClientScript::POS_HEAD);?>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
