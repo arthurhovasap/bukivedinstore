@@ -1,0 +1,214 @@
+2016/10/06 18:37:01 [error] [exception.CException] exception 'CException' with message 'Alias "ext.ETwigViewRenderer" is invalid. Make sure it points to an existing PHP file and the file is readable.' in C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php:323
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php(196): YiiBase::import('ext.ETwigViewRe...', true)
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CModule.php(393): YiiBase::createComponent(Array)
+#2 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(221): CModule->getComponent('viewRenderer')
+#3 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(695): CWebApplication->getViewRenderer()
+#4 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(591): CController->resolveViewFile('index', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...')
+#5 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(867): CController->getViewFile('index')
+#6 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#7 C:\xampp\htdocs\bukivedi.store\protected\controllers\SiteController.php(32): CController->render('index')
+#8 C:\xampp\htdocs\bukivedi.store\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#9 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(282): CController->run('')
+#13 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#14 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#15 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/
+---
+2016/10/06 18:38:42 [error] [exception.CException] exception 'CException' with message 'Alias "ext.ETwigViewRenderer" is invalid. Make sure it points to an existing PHP file and the file is readable.' in C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php:323
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php(196): YiiBase::import('ext.ETwigViewRe...', true)
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CModule.php(393): YiiBase::createComponent(Array)
+#2 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(221): CModule->getComponent('viewRenderer')
+#3 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(695): CWebApplication->getViewRenderer()
+#4 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(591): CController->resolveViewFile('index', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...')
+#5 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(867): CController->getViewFile('index')
+#6 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#7 C:\xampp\htdocs\bukivedi.store\protected\controllers\SiteController.php(32): CController->render('index')
+#8 C:\xampp\htdocs\bukivedi.store\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#9 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(282): CController->run('')
+#13 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#14 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#15 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/
+---
+2016/10/06 18:38:45 [error] [exception.CException] exception 'CException' with message 'Alias "ext.ETwigViewRenderer" is invalid. Make sure it points to an existing PHP file and the file is readable.' in C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php:323
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php(196): YiiBase::import('ext.ETwigViewRe...', true)
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CModule.php(393): YiiBase::createComponent(Array)
+#2 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(221): CModule->getComponent('viewRenderer')
+#3 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(695): CWebApplication->getViewRenderer()
+#4 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(591): CController->resolveViewFile('index', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...')
+#5 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(867): CController->getViewFile('index')
+#6 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#7 C:\xampp\htdocs\bukivedi.store\protected\controllers\SiteController.php(32): CController->render('index')
+#8 C:\xampp\htdocs\bukivedi.store\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#9 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(282): CController->run('')
+#13 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#14 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#15 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/
+---
+2016/10/06 18:39:09 [error] [exception.CException] exception 'CException' with message 'Alias "ext.ETwigViewRenderer" is invalid. Make sure it points to an existing PHP file and the file is readable.' in C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php:323
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php(196): YiiBase::import('ext.ETwigViewRe...', true)
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CModule.php(393): YiiBase::createComponent(Array)
+#2 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(221): CModule->getComponent('viewRenderer')
+#3 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(695): CWebApplication->getViewRenderer()
+#4 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(591): CController->resolveViewFile('index', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...')
+#5 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(867): CController->getViewFile('index')
+#6 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#7 C:\xampp\htdocs\bukivedi.store\protected\controllers\SiteController.php(32): CController->render('index')
+#8 C:\xampp\htdocs\bukivedi.store\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#9 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(282): CController->run('')
+#13 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#14 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#15 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/
+---
+2016/10/06 18:39:10 [error] [exception.CException] exception 'CException' with message 'Alias "ext.ETwigViewRenderer" is invalid. Make sure it points to an existing PHP file and the file is readable.' in C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php:323
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php(196): YiiBase::import('ext.ETwigViewRe...', true)
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CModule.php(393): YiiBase::createComponent(Array)
+#2 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(221): CModule->getComponent('viewRenderer')
+#3 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(695): CWebApplication->getViewRenderer()
+#4 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(591): CController->resolveViewFile('index', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...')
+#5 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(867): CController->getViewFile('index')
+#6 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#7 C:\xampp\htdocs\bukivedi.store\protected\controllers\SiteController.php(32): CController->render('index')
+#8 C:\xampp\htdocs\bukivedi.store\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#9 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(282): CController->run('')
+#13 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#14 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#15 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/
+---
+2016/10/06 18:39:10 [error] [exception.CException] exception 'CException' with message 'Alias "ext.ETwigViewRenderer" is invalid. Make sure it points to an existing PHP file and the file is readable.' in C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php:323
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php(196): YiiBase::import('ext.ETwigViewRe...', true)
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CModule.php(393): YiiBase::createComponent(Array)
+#2 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(221): CModule->getComponent('viewRenderer')
+#3 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(695): CWebApplication->getViewRenderer()
+#4 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(591): CController->resolveViewFile('index', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...')
+#5 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(867): CController->getViewFile('index')
+#6 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#7 C:\xampp\htdocs\bukivedi.store\protected\controllers\SiteController.php(32): CController->render('index')
+#8 C:\xampp\htdocs\bukivedi.store\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#9 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(282): CController->run('')
+#13 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#14 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#15 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/
+---
+2016/10/06 18:41:12 [error] [exception.CException] exception 'CException' with message 'Alias "ext.ETwigViewRenderer" is invalid. Make sure it points to an existing PHP file and the file is readable.' in C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php:323
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php(196): YiiBase::import('ext.ETwigViewRe...', true)
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CModule.php(393): YiiBase::createComponent(Array)
+#2 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(221): CModule->getComponent('viewRenderer')
+#3 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(695): CWebApplication->getViewRenderer()
+#4 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(591): CController->resolveViewFile('index', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...')
+#5 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(867): CController->getViewFile('index')
+#6 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#7 C:\xampp\htdocs\bukivedi.store\protected\controllers\SiteController.php(32): CController->render('index')
+#8 C:\xampp\htdocs\bukivedi.store\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#9 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(282): CController->run('')
+#13 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#14 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#15 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/
+---
+2016/10/06 18:41:14 [error] [exception.CException] exception 'CException' with message 'Alias "ext.ETwigViewRenderer" is invalid. Make sure it points to an existing PHP file and the file is readable.' in C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php:323
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php(196): YiiBase::import('ext.ETwigViewRe...', true)
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CModule.php(393): YiiBase::createComponent(Array)
+#2 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(221): CModule->getComponent('viewRenderer')
+#3 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(695): CWebApplication->getViewRenderer()
+#4 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(591): CController->resolveViewFile('index', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...')
+#5 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(867): CController->getViewFile('index')
+#6 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#7 C:\xampp\htdocs\bukivedi.store\protected\controllers\SiteController.php(32): CController->render('index')
+#8 C:\xampp\htdocs\bukivedi.store\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#9 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(282): CController->run('')
+#13 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#14 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#15 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/
+---
+2016/10/06 18:41:15 [error] [exception.CException] exception 'CException' with message 'Alias "ext.ETwigViewRenderer" is invalid. Make sure it points to an existing PHP file and the file is readable.' in C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php:323
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php(196): YiiBase::import('ext.ETwigViewRe...', true)
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CModule.php(393): YiiBase::createComponent(Array)
+#2 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(221): CModule->getComponent('viewRenderer')
+#3 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(695): CWebApplication->getViewRenderer()
+#4 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(591): CController->resolveViewFile('index', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...', 'C:\\xampp\\htdocs...')
+#5 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(867): CController->getViewFile('index')
+#6 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#7 C:\xampp\htdocs\bukivedi.store\protected\controllers\SiteController.php(32): CController->render('index')
+#8 C:\xampp\htdocs\bukivedi.store\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#9 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(282): CController->run('')
+#13 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#14 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#15 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/
+---
+2016/10/06 18:57:05 [error] [php] Missing argument 1 for CHtml::script(), called in C:\xampp\htdocs\bukivedi.store\protected\views\layouts\main.php on line 22 and defined (C:\xampp\htdocs\bukivedi.store\framework\web\helpers\CHtml.php:292)
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#1 C:\xampp\htdocs\bukivedi.store\framework\web\widgets\CContentDecorator.php(76): SiteController->renderFile()
+#2 C:\xampp\htdocs\bukivedi.store\framework\web\widgets\CContentDecorator.php(54): CContentDecorator->decorate()
+#3 C:\xampp\htdocs\bukivedi.store\framework\web\widgets\COutputProcessor.php(44): CContentDecorator->processOutput()
+#4 C:\xampp\htdocs\bukivedi.store\framework\web\CBaseController.php(214): CContentDecorator->run()
+#5 C:\xampp\htdocs\bukivedi.store\framework\web\CBaseController.php(308): SiteController->endWidget()
+#6 C:\xampp\htdocs\bukivedi.store\protected\views\layouts\column1.php(6): SiteController->endContent()
+#7 C:\xampp\htdocs\bukivedi.store\framework\web\CBaseController.php(126): require()
+#8 C:\xampp\htdocs\bukivedi.store\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#9 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(784): SiteController->renderFile()
+#10 C:\xampp\htdocs\bukivedi.store\protected\controllers\SiteController.php(32): SiteController->render()
+#11 C:\xampp\htdocs\bukivedi.store\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#12 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(308): CInlineAction->runWithParams()
+#13 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(286): SiteController->runAction()
+#14 C:\xampp\htdocs\bukivedi.store\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#15 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(282): SiteController->run()
+#16 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#17 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#18 C:\xampp\htdocs\bukivedi.store\index.php(13): CWebApplication->run()
+REQUEST_URI=/
+in C:\xampp\htdocs\bukivedi.store\protected\views\layouts\main.php (22)
+in C:\xampp\htdocs\bukivedi.store\protected\views\layouts\column1.php (6)
+in C:\xampp\htdocs\bukivedi.store\protected\controllers\SiteController.php (32)

@@ -15,6 +15,7 @@ return array(
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
+                'application.ext.*',
 		'application.components.*',
                 'application.helper.*',
 	),
@@ -74,7 +75,6 @@ return array(
 				*/
 			),
 		),
-
 	),
 
 	// application-level parameters that can be accessed

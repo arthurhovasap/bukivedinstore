@@ -1,6 +1,6 @@
 <?php /* @var $this Controller */ ?>
 <!DOCTYPE html>
-<html>
+<html ng-app="App">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="language" content="en">
@@ -20,13 +20,26 @@
             CGoogleApi::load('jquery') . "\n" .
             CGoogleApi::load("jqueryui")
         ); ?>
+        
+        <?php Yii::app()->clientScript->registerScriptFile(app::baseUrl(false, "/js/", "angular.min.js"), CClientScript::POS_HEAD);?>
         <?php Yii::app()->clientScript->registerScriptFile(app::baseUrl(false, "/js/", "main.js"), CClientScript::POS_HEAD);?>
-	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+        
+        <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+        
+        <script>
+            var app = angular.module('App', []);
+            app.controller('AppCtrl', function($scope) {
+                $scope.count = 0;
+                $scope.myFunction = function() {
+                    alert("777");
+                }
+            });
+        </script>
 </head>
 
 <body>
 
-<div class="container" id="page">
+    <div class="container" id="page" ng-controller="AppCtrl">
 
 	<div id="header">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
@@ -43,6 +56,7 @@
 			),
 		)); ?>
 	</div><!-- mainmenu -->
+        
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
