@@ -212,3 +212,70 @@ REQUEST_URI=/
 in C:\xampp\htdocs\bukivedi.store\protected\views\layouts\main.php (22)
 in C:\xampp\htdocs\bukivedi.store\protected\views\layouts\column1.php (6)
 in C:\xampp\htdocs\bukivedi.store\protected\controllers\SiteController.php (32)
+2016/10/10 12:50:36 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "gii".' in C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.php?r=gii
+---
+2016/10/10 13:34:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "store".' in C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('store')
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.php?r=store
+HTTP_REFERER=http://bukivedi.store/index.php
+---
+2016/10/10 15:08:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "stores".' in C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('stores')
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.php?r=stores
+HTTP_REFERER=http://bukivedi.store/index.php
+---
+2016/10/10 15:09:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "stores".' in C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('stores')
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.php?r=stores
+HTTP_REFERER=http://bukivedi.store/index.php
+---
+2016/10/10 15:09:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "stores".' in C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('stores')
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.php?r=stores
+---
+2016/10/10 15:11:04 [error] [exception.CException] exception 'CException' with message 'Alias "stores.StoresModule" is invalid. Make sure it points to an existing PHP file and the file is readable.' in C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php:323
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php(196): YiiBase::import('stores.StoresMo...', true)
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CModule.php(282): YiiBase::createComponent('stores.StoresMo...', 'stores', NULL, Array)
+#2 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(337): CModule->getModule('stores')
+#3 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(276): CWebApplication->createController('stores')
+#4 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('stores')
+#5 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#6 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#7 {main}
+REQUEST_URI=/index.php?r=stores
+---
+2016/10/10 15:11:06 [error] [exception.CException] exception 'CException' with message 'Alias "stores.StoresModule" is invalid. Make sure it points to an existing PHP file and the file is readable.' in C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php:323
+Stack trace:
+#0 C:\xampp\htdocs\bukivedi.store\framework\YiiBase.php(196): YiiBase::import('stores.StoresMo...', true)
+#1 C:\xampp\htdocs\bukivedi.store\framework\base\CModule.php(282): YiiBase::createComponent('stores.StoresMo...', 'stores', NULL, Array)
+#2 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(337): CModule->getModule('stores')
+#3 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(276): CWebApplication->createController('stores')
+#4 C:\xampp\htdocs\bukivedi.store\framework\web\CWebApplication.php(141): CWebApplication->runController('stores')
+#5 C:\xampp\htdocs\bukivedi.store\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#6 C:\xampp\htdocs\bukivedi.store\index.php(13): CApplication->run()
+#7 {main}
+REQUEST_URI=/index.php?r=stores
+---
