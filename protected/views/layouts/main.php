@@ -6,23 +6,28 @@
 	<meta name="language" content="en">
 
 	<!-- blueprint CSS framework -->
-        <link rel="stylesheet" type="text/css" href="<?php echo app::baseUrl(false, "/css/", "screen.css"); ?>" media="screen, projection">
-	<link rel="stylesheet" type="text/css" href="<?php echo app::baseUrl(false, "/css/", "print.css"); ?>" media="print">
+        <!--<link rel="stylesheet" type="text/css" href="<?php echo app::baseUrl(false, "/css/", "screen.css"); ?>" media="screen, projection">-->
+	<!--<link rel="stylesheet" type="text/css" href="<?php echo app::baseUrl(false, "/css/", "print.css"); ?>" media="print">-->
 	<!--[if lt IE 8]>
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection">
 	<![endif]-->
 
 	<link rel="stylesheet" type="text/css" href="<?php echo app::baseUrl(false, "/css/", "main.css"); ?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo app::baseUrl(false, "/css/", "form.css"); ?>">
-
-        <?php echo CGoogleApi::init(); ?>
-        <?php echo CHtml::script(
-            CGoogleApi::load('jquery') . "\n" .
-            CGoogleApi::load("jqueryui")
-        ); ?>
-        
+	<!--<link rel="stylesheet" type="text/css" href="<?php echo app::baseUrl(false, "/css/", "form.css"); ?>">-->
+        <?php Yii::app()->clientScript->registerScriptFile(app::baseUrl(false, "/js/", "jquery-1.9.1.min.js"), CClientScript::POS_HEAD);?>
+        <?php Yii::app()->clientScript->registerScriptFile(app::baseUrl(false, "/js/", "jquery-ui.min.js"), CClientScript::POS_HEAD);?>
+        <?php Yii::app()->clientScript->registerScriptFile(app::baseUrl(false, "/js/", "jquery-migrate-1.2.1.min.js"), CClientScript::POS_HEAD);?>
         <?php Yii::app()->clientScript->registerScriptFile(app::baseUrl(false, "/js/", "angular.min.js"), CClientScript::POS_HEAD);?>
         <?php Yii::app()->clientScript->registerScriptFile(app::baseUrl(false, "/js/", "main.js"), CClientScript::POS_HEAD);?>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="<?php echo app::baseUrl(false, "/bootstrap/css/", "bootstrap.min.css"); ?>" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="<?php echo app::baseUrl(false, "/bootstrap/css/", "bootstrap-theme.min.css"); ?>" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <?php Yii::app()->clientScript->registerScriptFile(app::baseUrl(false, "/bootstrap/js/", "bootstrap.min.js"), CClientScript::POS_HEAD);?>
         
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
         
@@ -39,8 +44,10 @@
 
 <body>
 
-    <div class="container" id="page" ng-controller="AppCtrl">
-
+    <div class="container-fluid" id="page" ng-controller="AppCtrl">
+        <div class="row">
+            
+        </div>
 	<div id="header">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
 	</div><!-- header -->
