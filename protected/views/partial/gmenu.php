@@ -40,6 +40,17 @@
                                     array('label'=>'Модуль 2', 'url'=>array('#')),
                                     array('label'=>'...', 'url'=>array('#')),
                                     array('label'=>'Модуль &infin;', 'url'=>array('#')),
+                                    array('label'=>'Таблицы <span class="caret"></span>', 'url'=>array('#'), 
+                                        'itemOptions'=>array('class'=>'dropdown'),
+                                        'linkOptions'=> array(
+                                            'class' => 'dropdown-toggle',
+                                            'data-toggle' => 'dropdown',
+                                        ),
+                                        'items' => array(
+                                            array('label' => 'Пользователи', 'url' => array('/stores/user')),
+                                            array('label' => '', 'url' => array('#'), 'itemOptions'=>array('role'=>'separator', 'class'=>'divider')),
+                                        ),
+                                    ),
                                     array('label'=>'Вход', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
                                     array('label'=>'Выход ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
                             ),

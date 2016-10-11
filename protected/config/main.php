@@ -19,6 +19,7 @@ return array(
 		'application.models.*',
                 'application.ext.*',
 		'application.components.*',
+                'ext.easyimage.EasyImage',
                 'application.helper.*',
 	),
     
@@ -43,6 +44,15 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
+            
+                'easyImage' => array(
+                    'class' => 'application.extensions.easyimage.EasyImage',
+                    //'driver' => 'GD',
+                    //'quality' => 100,
+                    //'cachePath' => '/assets/easyimage/',
+                    //'cacheTime' => 2592000,
+                    //'retinaSupport' => false,
+                  ),
 
 		// uncomment the following to enable URLs in path-format
 		/*
