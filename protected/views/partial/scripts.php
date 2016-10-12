@@ -22,6 +22,7 @@ $cs->scriptMap = array(
     'jquery.ui.js' => false,
 );
 ?>
+
 <?php Yii::app()->clientScript->registerScriptFile(app::baseUrl(false, "/js/", "jquery-ui.min.js"), CClientScript::POS_HEAD); ?>
 <?php Yii::app()->clientScript->registerScriptFile(app::baseUrl(false, "/js/", "jquery-migrate-1.2.1.min.js"), CClientScript::POS_HEAD); ?>
 <?php Yii::app()->clientScript->registerScriptFile(app::baseUrl(false, "/js/", "angular.min.js"), CClientScript::POS_HEAD); ?>

@@ -22,7 +22,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('created')); ?>:</b>
-	<?php echo CHtml::encode($data->created); ?>
+	<?php echo app::datetimeUserFriendly(CHtml::encode($data->created)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('updated')); ?>:</b>

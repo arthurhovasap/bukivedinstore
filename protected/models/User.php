@@ -51,14 +51,14 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('personal_email, role_id, status_id', 'required'),
+			array('personal_email, username', 'required'),
 			array('role_id, creator_id, status_id, phone', 'numerical', 'integerOnly'=>true),
-			array('username, firstname, lastname, personal_email, work_email, password, passport, secondname, phone, image, repassword', 'length', 'max'=>255),
-                    
+			array('username, firstname, lastname, personal_email, work_email, password, passport, secondname, phone, image, repassword, address, website, company', 'length', 'max'=>255),
+                        array('personal_email, work_email', 'email'),
                         array('username, personal_email, work_email', 'unique'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, username, firstname, lastname, personal_email, work_email, created, updated, role_id, creator_id, password, status_id, customername, customeremail, phone, image, repassword', 'safe', 'on'=>'search'),
+			array('id, username, firstname, lastname, personal_email, work_email, created, updated, role_id, creator_id, password, status_id, customername, customeremail, phone, image, repassword, address, website, company', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,9 +74,8 @@ class User extends CActiveRecord
 			'isystemsClientOrders1' => array(self::HAS_MANY, 'IsystemsClientOrder', 'user_id'),
 			'isystemsStores' => array(self::HAS_MANY, 'IsystemsStore', 'user_id'),
 			'creator' => array(self::BELONGS_TO, 'User', 'creator_id'),
-			'creator' => array(self::HAS_MANY, 'User', 'creator_id'),
 			'role' => array(self::BELONGS_TO, 'Role', 'role_id'),
-			'status' => array(self::BELONGS_TO, 'IsystemsStatus', 'status_id'),
+			'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
 		);
 	}
 
@@ -97,8 +96,12 @@ class User extends CActiveRecord
 			'created' => 'Создан',
 			'updated' => 'Обновлен',
                         'passport' => 'Паспорт',
+                        'image' => 'Картинка',
                         'secondname' => 'Отчество',
 			'role_id' => 'Права/привилегии',
+                        'company' => 'Компания',
+                        'address' => 'Адрес',
+                        'website' => 'Веб сайта',
 			'creator_id' => 'Создано',
 			'password' => 'Пароль',
                         'repassword' => 'Пароль павторно',
