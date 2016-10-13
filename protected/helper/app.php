@@ -26,4 +26,12 @@ class app {
         $stringDateTime .= ', '.$days[(date('w', $date))];
         return $stringDateTime;
     }
+    
+    public static function actionRole($roles){
+        if (in_array(User::role(), $roles)) {
+            return 'allow';
+        }else{
+            return 'deny';
+        }
+    }
 }

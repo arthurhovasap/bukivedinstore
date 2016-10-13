@@ -13,7 +13,12 @@
  */
 class Status extends CActiveRecord
 {
-	/**
+        public static $puplic = 1;
+        public static $protected = 2;
+        public static $pending = 3;
+        public static $draft = 4;
+        public static $private = 5;
+        /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()

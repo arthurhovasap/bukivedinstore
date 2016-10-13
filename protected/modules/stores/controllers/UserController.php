@@ -19,6 +19,12 @@ class UserController extends Controller
 		);
 	}
 
+        private $role_index = array(1, 2, 3, 4, 5);
+        private $role_view = array(1, 2, 3, 4, 5);
+        private $role_create = array(1, 2, 3);
+        private $role_update = array(1, 2, 3, 4, 5);
+        private $role_admin = array(1, 2, 3, 4, 5);
+        private $role_delete = array(1, 2, 3, 4, 5);
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -27,17 +33,29 @@ class UserController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+			array(app::actionRole($this->role_index) ,
+				'actions'=>array('index'),
 				'users'=>array('*'),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
+			array(app::actionRole($this->role_view) ,
+				'actions'=>array('view'),
+				'users'=>array('*'),
 			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+                        array(app::actionRole($this->role_create) ,
+				'actions'=>array('create'),
+				'users'=>array('*'),
+			),
+                        array(app::actionRole($this->role_update) ,
+				'actions'=>array('update'),
+				'users'=>array('*'),
+			),
+                        array(app::actionRole($this->role_admin) ,
+				'actions'=>array('admin'),
+				'users'=>array('*'),
+			),
+                        array(app::actionRole($this->role_delete) ,
+				'actions'=>array('delete'),
+				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -87,7 +105,11 @@ class UserController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+                if ((User::id() != $model->id && User::id() != $model->creator_id)){
+                    if (User::role() != Role::$superadmin)
+                        throw new CHttpException(403, "У Вас не дастаточно прав!");
+                }
+                
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -123,6 +145,8 @@ class UserController extends Controller
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('User');
+                $dataProvider->pagination->pageSize=10;
+                $dataProvider->criteria->order = "RAND()";
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));

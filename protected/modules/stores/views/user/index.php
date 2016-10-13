@@ -12,9 +12,10 @@ $this->menu=array(
 );
 ?>
 
-<h1>Пользователи</h1>
+<h1>Популярные пользователи</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
+        'pagerCssClass' => 'pagination pull-right',
 )); ?>

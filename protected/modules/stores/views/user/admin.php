@@ -40,6 +40,7 @@ $('.search-form form').submit(function(){
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'user-grid',
 	'dataProvider'=>$model->search(),
+        'pagerCssClass' => 'pagination pull-right',
 	'filter'=>$model,
 	'columns'=>array(
 		'id',

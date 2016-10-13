@@ -106,6 +106,8 @@ class User extends CActiveRecord
 			'password' => 'Пароль',
                         'repassword' => 'Пароль павторно',
 			'status_id' => 'Статус',
+                        'fio' => 'ФИО',
+                        'emails' => 'почты'
 		);
 	}
 
@@ -142,7 +144,7 @@ class User extends CActiveRecord
 		$criteria->compare('creator_id',$this->creator_id);
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('status_id',$this->status_id);
-
+                $criteria->order = "id DESC";
                 if ( $this->customername != "" )
                 {
                         $crit2 = new CDbCriteria;
@@ -155,8 +157,8 @@ class User extends CActiveRecord
                 if ( $this->customeremail != "" )
                 {
                         $crit2 = new CDbCriteria;
-                        $crit2->compare('personal_email', $this->customername , true, 'OR');
-                        $crit2->compare('work_email', $this->customername , true, 'OR');
+                        $crit2->compare('personal_email', $this->customeremail , true, 'OR');
+                        $crit2->compare('work_email', $this->customeremail , true, 'OR');
                         $criteria->mergeWith($crit2);
                 }
 
@@ -250,5 +252,35 @@ class User extends CActiveRecord
             }else{
                 return ($this->image) ? $this->image : app::baseUrl(true, '/images/', 'noavatar.jpg');
             }
+        }
+        
+        public static function status(){
+            if (!Yii::app()->user->isGuest){
+                $model = User::model()->findByPk(User::id(), array('select' => 'status_id'));
+                return $model->status_id;
+            }else{
+                return NULL;
+            }
+        }
+        
+        public static function role(){
+            if (!Yii::app()->user->isGuest){
+                $model = User::model()->findByPk(User::id(), array('select' => 'role_id'));
+                return $model->role_id;
+            }else{
+                return NULL;
+            }
+        }
+        
+        public static function id(){
+            return Yii::app()->user->getId();
+        }
+        
+        public function getFIO(){
+            return $this->firstname . ' ' . $this->lastname . ' ' . $this->secondname;
+        }
+        
+        public function emails(){
+            return $this->personal_email . ',  ' . $this->work_email;
         }
 }

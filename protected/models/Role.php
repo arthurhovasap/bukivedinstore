@@ -14,6 +14,7 @@
  */
 class Role extends CActiveRecord
 {
+        public static $superadmin = 1;
 	/**
 	 * @return string the associated database table name
 	 */
