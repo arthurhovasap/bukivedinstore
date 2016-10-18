@@ -56,8 +56,8 @@ class Order extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'title' => 'Title',
-			'description' => 'Description',
+			'title' => 'Загаловок',
+			'description' => 'Информация',
 		);
 	}
 

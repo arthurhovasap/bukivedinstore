@@ -15,24 +15,27 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<p class="note">Поля с <span class="required">*</span> необходимы.</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'title'); ?>
-		<?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'title'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'description'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+	<div class="col-md-6">
+                <div class="form-group">
+                        <?php echo $form->labelEx($model,'title'); ?>
+                        <?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>255, 'class' => 'form-control', 'placeholder'=>'Введети заголовок')); ?>
+                        <?php echo $form->error($model,'title'); ?>
+                </div>
+        </div>
+	<div class="col-md-6">
+                <div class="form-group">
+                        <?php echo $form->labelEx($model,'description'); ?>
+                        <?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50, 'class' => 'form-control', 'placeholder'=>'Введети информацию')); ?>
+                        <?php echo $form->error($model,'description'); ?>
+                </div>
+        </div>
+        
+	<div class="form-group">
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array('class'=>'btn btn-primary btn-block')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

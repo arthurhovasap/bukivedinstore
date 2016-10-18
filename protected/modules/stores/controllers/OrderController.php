@@ -28,7 +28,7 @@ class OrderController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view', 'zakaz'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -169,5 +169,17 @@ class OrderController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+        
+        public function actionZakaz()
+	{
+		$model=new CalculationsParts('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['CalculationsParts']))
+			$model->attributes=$_GET['CalculationsParts'];
+
+		$this->render('zakaz',array(
+			'model'=>$model,
+		));
 	}
 }

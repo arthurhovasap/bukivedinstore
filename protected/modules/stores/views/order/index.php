@@ -3,16 +3,17 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Orders',
+	'Заказы',
 );
 
 $this->menu=array(
-	array('label'=>'Create Order', 'url'=>array('create')),
-	array('label'=>'Manage Order', 'url'=>array('admin')),
+	array('label'=>'Создать заказ', 'url'=>array('create')),
+	array('label'=>'Управление заказами', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Orders</h1>
+<h1>Популярные заказы</h1>
+
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

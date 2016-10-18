@@ -3,19 +3,17 @@
 /* @var $model Order */
 
 $this->breadcrumbs=array(
-	'Orders'=>array('index'),
-	$model->title=>array('view','id'=>$model->id),
-	'Update',
+	'Заказы'=>array('index'),
+	$model->id=>array('view','id'=>$model->id),
+	'Редактировать',
 );
 
 $this->menu=array(
-	array('label'=>'List Order', 'url'=>array('index')),
-	array('label'=>'Create Order', 'url'=>array('create')),
-	array('label'=>'View Order', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Order', 'url'=>array('admin')),
+	array('label'=>'Список заказов', 'url'=>array('index')),
+	array('label'=>'Создать заказ', 'url'=>array('create')),
+	array('label'=>'Просмотр заказов', 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>'Управление заказами', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update Order <?php echo $model->id; ?></h1>
-
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<h1>Редактировать заказ <?php echo $model->id; ?></h1>
