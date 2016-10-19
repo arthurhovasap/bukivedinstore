@@ -112,7 +112,7 @@ class CalculationsParts extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
                     //'isystemsClientOrders' => array(self::HAS_MANY, 'IsystemsClientOrder', 'orderer_id'),
-                    //'zakaz' => array(self::BELONGS_TO, 'Zakaz', 'status_id'),
+                    //'calculations' => array(self::BELONGS_TO, 'Calculations', 'calculation_id'),
 		);
 	}
 
@@ -209,73 +209,77 @@ class CalculationsParts extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('calculation_id',$this->calculation_id,true);
-		$criteria->compare('type',$this->type,true);
-		$criteria->compare('machine_id',$this->machine_id,true);
-		$criteria->compare('pages_count',$this->pages_count);
-		$criteria->compare('pages_width',$this->pages_width);
-		$criteria->compare('pages_height',$this->pages_height);
-		$criteria->compare('padding',$this->padding);
-		$criteria->compare('indent',$this->indent);
-		$criteria->compare('paper_type',$this->paper_type,true);
-		$criteria->compare('paper_id',$this->paper_id,true);
-		$criteria->compare('paper_density',$this->paper_density);
-		$criteria->compare('paper_depth',$this->paper_depth,true);
-		$criteria->compare('paper_list_price',$this->paper_list_price,true);
-		$criteria->compare('color_id',$this->color_id,true);
-		$criteria->compare('pages_per_list',$this->pages_per_list);
-		$criteria->compare('layout_link',$this->layout_link,true);
-		$criteria->compare('lists_width',$this->lists_width);
-		$criteria->compare('lists_height',$this->lists_height);
-		$criteria->compare('lists_min_width',$this->lists_min_width);
-		$criteria->compare('lists_min_height',$this->lists_min_height);
-		$criteria->compare('roller_width',$this->roller_width);
-		$criteria->compare('roller_min_width',$this->roller_min_width);
-		$criteria->compare('roller_length',$this->roller_length);
-		$criteria->compare('roller_area',$this->roller_area);
-		$criteria->compare('roller_area_price',$this->roller_area_price,true);
-		$criteria->compare('insert_operation_price',$this->insert_operation_price,true);
-		$criteria->compare('cover_id',$this->cover_id,true);
-		$criteria->compare('cover_parts',$this->cover_parts,true);
-		$criteria->compare('carton_id',$this->carton_id,true);
-		$criteria->compare('carton_paper_id',$this->carton_paper_id,true);
-		$criteria->compare('super_flaps_width',$this->super_flaps_width);
-		$criteria->compare('postpress_cutting',$this->postpress_cutting);
-		$criteria->compare('postpress_foldings_count',$this->postpress_foldings_count);
-		$criteria->compare('postpress_flaps_count',$this->postpress_flaps_count);
-		$criteria->compare('postpress_flaps_width',$this->postpress_flaps_width);
-		$criteria->compare('postpress_lamination_id',$this->postpress_lamination_id,true);
-		$criteria->compare('postpress_lamination_double',$this->postpress_lamination_double);
-		$criteria->compare('postpress_varnishing_id',$this->postpress_varnishing_id,true);
-		$criteria->compare('postpress_varnishing_pages',$this->postpress_varnishing_pages);
-		$criteria->compare('postpress_lettering_cliche',$this->postpress_lettering_cliche,true);
-		$criteria->compare('postpress_lettering_fittings',$this->postpress_lettering_fittings);
-		$criteria->compare('postpress_felling_stamp',$this->postpress_felling_stamp,true);
-		$criteria->compare('postpress_felling_fittings',$this->postpress_felling_fittings);
-		$criteria->compare('postpress_felling_pages',$this->postpress_felling_pages);
-		$criteria->compare('postpress_rounding',$this->postpress_rounding);
-		$criteria->compare('bought',$this->bought);
-		$criteria->compare('stock_status',$this->stock_status,true);
-		$criteria->compare('stock_date',$this->stock_date,true);
-		$criteria->compare('stock_name',$this->stock_name,true);
-		$criteria->compare('stock_roller_width',$this->stock_roller_width);
-		$criteria->compare('stock_size_id',$this->stock_size_id,true);
-		$criteria->compare('stock_comment',$this->stock_comment,true);
-		$criteria->compare('fittings',$this->fittings);
-		$criteria->compare('runs',$this->runs);
-		$criteria->compare('lists',$this->lists);
-		$criteria->compare('fittings_lists',$this->fittings_lists);
-		$criteria->compare('lists_weight',$this->lists_weight);
-		$criteria->compare('lists_min_weight',$this->lists_min_weight);
-		$criteria->compare('lists_price',$this->lists_price,true);
-		$criteria->compare('fittings_price',$this->fittings_price,true);
-		$criteria->compare('runs_price',$this->runs_price,true);
-		$criteria->compare('prepress_price',$this->prepress_price,true);
-		$criteria->compare('press_price',$this->press_price,true);
-		$criteria->compare('postpress_price',$this->postpress_price,true);
-		$criteria->compare('total_price',$this->total_price,true);
-                $criteria->order = "id DESC";
+		$criteria->compare('t.id',$this->id,true);
+		$criteria->compare('t.calculation_id',$this->calculation_id,true);
+		$criteria->compare('t.type',$this->type,true);
+		$criteria->compare('t.machine_id',$this->machine_id,true);
+		$criteria->compare('t.pages_count',$this->pages_count);
+		$criteria->compare('t.pages_width',$this->pages_width);
+		$criteria->compare('t.pages_height',$this->pages_height);
+		$criteria->compare('t.padding',$this->padding);
+		$criteria->compare('t.indent',$this->indent);
+		$criteria->compare('t.paper_type',$this->paper_type,true);
+		$criteria->compare('t.paper_id',$this->paper_id,true);
+		$criteria->compare('t.paper_density',$this->paper_density);
+		$criteria->compare('t.paper_depth',$this->paper_depth,true);
+		$criteria->compare('t.paper_list_price',$this->paper_list_price,true);
+		$criteria->compare('t.color_id',$this->color_id,true);
+		$criteria->compare('t.pages_per_list',$this->pages_per_list);
+		$criteria->compare('t.layout_link',$this->layout_link,true);
+		$criteria->compare('t.lists_width',$this->lists_width);
+		$criteria->compare('t.lists_height',$this->lists_height);
+		$criteria->compare('t.lists_min_width',$this->lists_min_width);
+		$criteria->compare('t.lists_min_height',$this->lists_min_height);
+		$criteria->compare('t.roller_width',$this->roller_width);
+		$criteria->compare('t.roller_min_width',$this->roller_min_width);
+		$criteria->compare('t.roller_length',$this->roller_length);
+		$criteria->compare('t.roller_area',$this->roller_area);
+		$criteria->compare('t.roller_area_price',$this->roller_area_price,true);
+		$criteria->compare('t.insert_operation_price',$this->insert_operation_price,true);
+		$criteria->compare('t.cover_id',$this->cover_id,true);
+		$criteria->compare('t.cover_parts',$this->cover_parts,true);
+		$criteria->compare('t.carton_id',$this->carton_id,true);
+		$criteria->compare('t.carton_paper_id',$this->carton_paper_id,true);
+		$criteria->compare('t.super_flaps_width',$this->super_flaps_width);
+		$criteria->compare('t.postpress_cutting',$this->postpress_cutting);
+		$criteria->compare('t.postpress_foldings_count',$this->postpress_foldings_count);
+		$criteria->compare('t.postpress_flaps_count',$this->postpress_flaps_count);
+		$criteria->compare('t.postpress_flaps_width',$this->postpress_flaps_width);
+		$criteria->compare('t.postpress_lamination_id',$this->postpress_lamination_id,true);
+		$criteria->compare('t.postpress_lamination_double',$this->postpress_lamination_double);
+		$criteria->compare('t.postpress_varnishing_id',$this->postpress_varnishing_id,true);
+		$criteria->compare('t.postpress_varnishing_pages',$this->postpress_varnishing_pages);
+		$criteria->compare('t.postpress_lettering_cliche',$this->postpress_lettering_cliche,true);
+		$criteria->compare('t.postpress_lettering_fittings',$this->postpress_lettering_fittings);
+		$criteria->compare('t.postpress_felling_stamp',$this->postpress_felling_stamp,true);
+		$criteria->compare('t.postpress_felling_fittings',$this->postpress_felling_fittings);
+		$criteria->compare('t.postpress_felling_pages',$this->postpress_felling_pages);
+		$criteria->compare('t.postpress_rounding',$this->postpress_rounding);
+		$criteria->compare('t.bought',$this->bought);
+		$criteria->compare('t.stock_status',$this->stock_status,true);
+		$criteria->compare('t.stock_date',$this->stock_date,true);
+		$criteria->compare('t.stock_name',$this->stock_name,true);
+		$criteria->compare('t.stock_roller_width',$this->stock_roller_width);
+		$criteria->compare('t.stock_size_id',$this->stock_size_id,true);
+		$criteria->compare('t.stock_comment',$this->stock_comment,true);
+		$criteria->compare('t.fittings',$this->fittings);
+		$criteria->compare('t.runs',$this->runs);
+		$criteria->compare('t.lists',$this->lists);
+		$criteria->compare('t.fittings_lists',$this->fittings_lists);
+		$criteria->compare('t.lists_weight',$this->lists_weight);
+		$criteria->compare('t.lists_min_weight',$this->lists_min_weight);
+		$criteria->compare('t.lists_price',$this->lists_price,true);
+		$criteria->compare('t.fittings_price',$this->fittings_price,true);
+		$criteria->compare('t.runs_price',$this->runs_price,true);
+		$criteria->compare('t.prepress_price',$this->prepress_price,true);
+		$criteria->compare('t.press_price',$this->press_price,true);
+		$criteria->compare('t.postpress_price',$this->postpress_price,true);
+		$criteria->compare('t.total_price',$this->total_price,true);
+                $criteria->order = "t.id DESC";
+                $criteria->join = "LEFT JOIN calculations AS c ON c.id = t.calculation_id JOIN zakaz AS z
+                ON z.raschet = c.old_id
+                LEFT JOIN paper AS p
+                ON p.id = t.paper_id";
                 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -292,4 +296,38 @@ class CalculationsParts extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        public function newsearch(){
+            $count=Yii::app()->db->createCommand("SELECT 
+                    COUNT(*)
+                    FROM calculations_parts AS cp
+                    LEFT JOIN calculations AS c
+                    ON c.id = cp.calculation_id
+                    JOIN zakaz AS z
+                    ON z.raschet = c.old_id
+                    LEFT JOIN paper AS p
+                    ON p.id = cp.paper_id
+                    WHERE z.status <= 210 AND z.raschet <> 0 AND z.nomer NOT LIKE '%!S%' AND cp.paper_type = '' AND cp.paper_id <> 0")->queryScalar();
+                
+                $sql="SELECT cp.id, z.nomer, z.date_off, cp.lists_min_width, cp.lists_min_height, cp.lists_width, cp.lists_height, cp.lists_min_weight, cp.lists_weight, cp.pages_width, cp.pages_height, cp.lists_price,
+                    p.title AS paper_title, p.glossy_matt, z.status, cp.stock_roller_width, cp.stock_status, cp.stock_comment, cp.stock_date, c.old_id, z.id AS zakaz_id, p.real_type, cp.paper_id
+                    FROM calculations_parts AS cp
+                    LEFT JOIN calculations AS c
+                    ON c.id = cp.calculation_id
+                    JOIN zakaz AS z
+                    ON z.raschet = c.old_id
+                    LEFT JOIN paper AS p
+                    ON p.id = cp.paper_id
+                    WHERE z.status <= 210 AND z.raschet <> 0 AND z.nomer NOT LIKE '%!S%' AND cp.paper_type = '' AND cp.paper_id <> 0
+                    ORDER BY cp.stock_status ASC, (cp.lists_price*(1-(cp.lists_min_width*cp.lists_min_height)/(cp.lists_width*cp.lists_height))) DESC, z.date_off ASC";
+                $dataProvider=new CSqlDataProvider($sql, array(
+                    'totalItemCount'=>$count,
+                    
+                    'pagination'=>array(
+                        'pageSize'=>10,
+                    ),
+                ));
+                
+                return $dataProvider;
+        }
 }

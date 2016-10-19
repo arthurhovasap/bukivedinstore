@@ -173,11 +173,8 @@ class OrderController extends Controller
         
         public function actionZakaz()
 	{
-		$model=new CalculationsParts('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['CalculationsParts']))
-			$model->attributes=$_GET['CalculationsParts'];
-
+		$model = new CalculationsParts();
+                
 		$this->render('zakaz',array(
 			'model'=>$model,
 		));
