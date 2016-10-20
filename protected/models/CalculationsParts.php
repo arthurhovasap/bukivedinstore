@@ -297,7 +297,7 @@ class CalculationsParts extends CActiveRecord
 		return parent::model($className);
 	}
         
-        public function newsearch(){
+        public function newsearch($page = NULL){
             $count=Yii::app()->db->createCommand("SELECT 
                     COUNT(*)
                     FROM calculations_parts AS cp

@@ -61,3 +61,24 @@ body{
     font-family: Roboto;
 }
 /* /google maps */
+
+/* orders */
+.orders-list{
+
+}
+
+.orders-list thead{
+    background: lightgray;
+}
+
+.status-waiting   { color:#000; background-color:#EE82EE !important; }
+.status-cancelled { color:#000; background-color:#EE82EE !important; }
+.status-prepress  { color:#000; background-color:#F00 !important;    }
+.status-new       { color:#000; background-color:#FFF !important;    }
+.status-press     { color:#000; background-color:#FA0 !important;    }
+.status-accepted  { color:#000; background-color:#0F0 !important;    }
+.status-done      { color:#000; background-color:#696 !important;    }
+.status-postpress { color:#FFF; background-color:#888 !important;    }
+.status-storage   { color:#FFF; background-color:#000 !important;    }
+.status-client    { color:#0F0; background-color:#000 !important;    }
+.ordered { background-color:#CCFF99 !important;color:#000 !important; }

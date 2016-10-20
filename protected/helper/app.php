@@ -34,4 +34,9 @@ class app {
             return 'deny';
         }
     }
+    
+    public static function dateTimeByFormat($datetime, $format = "Y.m.d"){
+        $datetime = strtotime($datetime);
+        echo date($format, $datetime);
+    }
 }
