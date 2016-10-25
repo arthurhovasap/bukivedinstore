@@ -5,15 +5,16 @@
  *
  * The followings are the available columns in table 'isystems_application':
  * @property integer $id
- * @property string $name
- * @property string $description
- * @property integer $order_id
+ * @property string $code
+ * @property string $note
  * @property integer $count
- * @property integer $counttype_id
+ * @property integer $paper_id
+ * @property integer $height
+ * @property integer $width
+ * @property integer $mass
  *
  * The followings are the available model relations:
- * @property IsystemsCounttype $counttype
- * @property IsystemsOrder $order
+ * @property IsystemsCondition $counttype
  */
 class Application extends CActiveRecord
 {
@@ -33,12 +34,14 @@ class Application extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, description, count, counttype_id', 'required'),
-			array('order_id, count, counttype_id', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>255),
+			array('count, paper_id', 'required'),
+			array('count, paper_id, height, width, mass', 'numerical', 'integerOnly'=>true),
+			array('code', 'length', 'max'=>50),
+			array('note', 'length', 'max'=>255),
+			array('description', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, description, order_id, count, counttype_id', 'safe', 'on'=>'search'),
+			array('id, code, note, count, paper_id, height, width, mass', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +53,7 @@ class Application extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'counttype' => array(self::BELONGS_TO, 'IsystemsCounttype', 'counttype_id'),
-			'order' => array(self::BELONGS_TO, 'IsystemsOrder', 'order_id'),
+			'paper' => array(self::BELONGS_TO, 'Paper', 'paper_id'),
 		);
 	}
 
@@ -62,11 +64,13 @@ class Application extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
-			'description' => 'Description',
-			'order_id' => 'Order',
-			'count' => 'Count',
-			'counttype_id' => 'Counttype',
+			'code' => 'Заказ',
+			'note' => 'Заметка',
+			'count' => 'Колличество',
+			'paper_id' => 'Тип бумаги',
+			'height' => 'Высота',
+			'width' => 'Ширина',
+			'mass' => 'Масса',
 		);
 	}
 
@@ -89,11 +93,13 @@ class Application extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('order_id',$this->order_id);
+		$criteria->compare('code',$this->code,true);
+		$criteria->compare('note',$this->note,true);
 		$criteria->compare('count',$this->count);
-		$criteria->compare('counttype_id',$this->counttype_id);
+		$criteria->compare('paper_id',$this->paper_id);
+		$criteria->compare('height',$this->height);
+		$criteria->compare('width',$this->width);
+		$criteria->compare('mass',$this->mass);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

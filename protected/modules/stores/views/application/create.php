@@ -3,16 +3,16 @@
 /* @var $model Application */
 
 $this->breadcrumbs=array(
-	'Applications'=>array('index'),
-	'Create',
+	'Заявки'=>array('index'),
+	'создать',
 );
 
 $this->menu=array(
-	array('label'=>'List Application', 'url'=>array('index')),
-	array('label'=>'Manage Application', 'url'=>array('admin')),
+	array('label'=>'Список заявок', 'url'=>array('index')),
+	array('label'=>'Управление заявками', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Create Application</h1>
+<h1>Создать заявку</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

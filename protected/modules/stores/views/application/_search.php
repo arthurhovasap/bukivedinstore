@@ -17,18 +17,13 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->label($model,'code'); ?>
+		<?php echo $form->textField($model,'code',array('size'=>50,'maxlength'=>50)); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'order_id'); ?>
-		<?php echo $form->textField($model,'order_id'); ?>
+		<?php echo $form->label($model,'note'); ?>
+		<?php echo $form->textField($model,'note',array('size'=>60,'maxlength'=>255)); ?>
 	</div>
 
 	<div class="row">
@@ -37,8 +32,23 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'counttype_id'); ?>
-		<?php echo $form->textField($model,'counttype_id'); ?>
+		<?php echo $form->label($model,'paper_id'); ?>
+		<?php echo $form->textField($model,'paper_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'height'); ?>
+		<?php echo $form->textField($model,'height'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'width'); ?>
+		<?php echo $form->textField($model,'width'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'mass'); ?>
+		<?php echo $form->textField($model,'mass'); ?>
 	</div>
 
 	<div class="row buttons">

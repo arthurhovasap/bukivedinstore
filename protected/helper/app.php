@@ -39,4 +39,11 @@ class app {
         $datetime = strtotime($datetime);
         echo date($format, $datetime);
     }
+    
+    public static function getParam($get){
+        if (Yii::app()->request->getQuery($get))
+            return Yii::app()->request->getQuery($get);
+        else
+            return NULL;
+    }
 }

@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Applications'=>array('index'),
-	$model->name,
+	$model->code,
 );
 
 $this->menu=array(
@@ -22,10 +22,13 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
+		'code',
 		'name',
 		'description',
-		'order_id',
 		'count',
 		'counttype_id',
+		'height',
+		'width',
+		'mass',
 	),
 )); ?>

@@ -152,4 +152,11 @@ class Paper extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        private $fullInfo;
+
+        public function getFullInfo()
+        {
+            return $this->title.' - '.$this->depth.'мм('.$this->density.'гр/м2)';
+        }
 }

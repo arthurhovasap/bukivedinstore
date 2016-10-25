@@ -46,11 +46,15 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'name',
-		'description',
-		'order_id',
+		'code',
+		'note',
 		'count',
-		'counttype_id',
+		'paper_id',
+		/*
+		'height',
+		'width',
+		'mass',
+		*/
 		array(
 			'class'=>'CButtonColumn',
 		),
