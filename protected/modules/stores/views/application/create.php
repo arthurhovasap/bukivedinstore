@@ -16,3 +16,7 @@ $this->menu=array(
 <h1>Создать заявку</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+
+
+<!--<iframe src="<?php //echo "http://wfpi.ru/modules/zakaz/storeinfo.php?id=".app::getParam("code"); ?>" width="500" height="400" ></iframe>-->
+<?php print(file_get_contents("http://wfpi.ru/modules/zakaz/storeinfo.php?id=".app::getParam("code")));?>
