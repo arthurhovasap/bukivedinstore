@@ -3,7 +3,8 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Заявки',
+	'Заявки' => array('/stores'),
+        'Бумаги',
 );
 
 $this->menu=array(
@@ -12,9 +13,16 @@ $this->menu=array(
 );
 ?>
 
-<h1>Заявки</h1>
+<h1>Номер: <?php echo $model->nomer; ?></h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+	'itemView'=>'_viewcode',
 )); ?>
+<fieldset><legend>Инфо: </legend>
+    <?php 
+        $code = app::getParam('id');
+        if (isset($code))
+            print(file_get_contents("http://wfpi.ru/modules/zakaz/storeinfo.php?id=".$code));
+    ?>
+</fieldset>

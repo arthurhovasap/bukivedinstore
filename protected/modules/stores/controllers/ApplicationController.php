@@ -28,7 +28,7 @@ class ApplicationController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index', 'view', 'code', 'paper', 'date'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -169,5 +169,83 @@ class ApplicationController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+        
+        /**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionCode($id)
+	{
+                $id = CHtml::encode($id);
+                $model = Zakaz::model()->findByPk($id);
+                    if ($model){
+                    $dataProvider=new CActiveDataProvider('Application', array(
+                        'criteria'=>array(
+                            'condition'=>'code='.$id,
+                            'order'=>'created DESC',
+                        ),
+                        'pagination'=>array(
+                            'pageSize'=>20,
+                        ),
+                    ));
+
+                    $this->render('code',array(
+                            'dataProvider'=>$dataProvider,
+                            'model' => $model
+                    ));
+                }else{
+                    throw new Exception("Нету заказа с таким кодам", 404);
+                }
+	}
+        
+        /**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionPaper($id)
+	{
+                $id = CHtml::encode($id);
+                $model = Paper::model()->findByPk($id);
+                if ($model){
+                    $this->pageTitle = $model->fullInfo . app::params('c');
+                    $dataProvider=new CActiveDataProvider('Application', array(
+                        'criteria'=>array(
+                            'condition'=>'paper_id='.$id,
+                            'order'=>'created DESC',
+                        ),
+                        'pagination'=>array(
+                            'pageSize'=>20,
+                        ),
+                    ));
+
+                    $this->render('paper',array(
+                            'dataProvider'=>$dataProvider,
+                            'model'=>$model
+                    ));
+                }else{
+                    throw new Exception("Нет такой бумаги", 404);
+                }
+                
+	}
+        
+        public function actionDate($id)
+	{
+                $id = CHtml::encode($id);
+                $this->pageTitle = $id . app::params('c');
+                $dataProvider=new CActiveDataProvider('Application', array(
+                    'criteria'=>array(
+                        'condition'=>'created LIKE "%'.$id.'%"',
+                        'order'=>'created DESC',
+                    ),
+                    'pagination'=>array(
+                        'pageSize'=>20,
+                    ),
+                ));
+
+                $this->render('date',array(
+                        'dataProvider'=>$dataProvider,
+                        'id'=>$id
+                ));          
 	}
 }

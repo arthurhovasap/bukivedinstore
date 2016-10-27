@@ -37,7 +37,7 @@ class app {
     
     public static function dateTimeByFormat($datetime, $format = "Y.m.d"){
         $datetime = strtotime($datetime);
-        echo date($format, $datetime);
+        return date($format, $datetime);
     }
     
     public static function getParam($get){
@@ -45,5 +45,17 @@ class app {
             return Yii::app()->request->getQuery($get);
         else
             return NULL;
+    }
+    
+    public static function time(){
+        return time();
+    }
+    
+    public static function date(){
+        return date("Y-m-d H:i:s");
+    }
+    
+    public static function params($paramName){
+        return Yii::app()->params[$paramName];
     }
 }

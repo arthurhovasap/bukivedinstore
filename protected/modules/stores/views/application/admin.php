@@ -3,13 +3,13 @@
 /* @var $model Application */
 
 $this->breadcrumbs=array(
-	'Applications'=>array('index'),
-	'Manage',
+	'Заявки'=>array('index'),
+	'Упавлять',
 );
 
 $this->menu=array(
-	array('label'=>'List Application', 'url'=>array('index')),
-	array('label'=>'Create Application', 'url'=>array('create')),
+	array('label'=>'Список заявок', 'url'=>array('index')),
+	array('label'=>'Создать заявку', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -26,14 +26,11 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Applications</h1>
+<h1>Управление заявками</h1>
 
-<p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
+<p>Вы можете дополнительно ввести оператор сравнения (<, <=,>,> =, <> или =) в начале каждого из значений поиска, чтобы указать, как сравнение должно быть сделано.</p>
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
+<?php //echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
@@ -46,15 +43,25 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'code',
-		'note',
+		array(
+                        'name' => 'nomer_search',
+                        'value' => '($data->code) ? Chtml::link($data->zakaz->nomer, array("code", "id" => $data->code)) : NULL',
+                        'type' => 'html'
+                ),
 		'count',
-		'paper_id',
-		/*
+		array(
+                        'name' => 'paper_search',
+                        'value' => 'Chtml::link($data->paper->fullInfo, array("paper", "id" => $data->paper_id))',
+                        'type' => 'html'
+                ),
 		'height',
 		'width',
 		'mass',
-		*/
+                array(
+                        'name' => 'created',
+                        'value' => 'Chtml::link(app::datetimeUserFriendly(CHtml::encode($data->created)), array("date", "id" => app::dateTimeByFormat($data->created, "Y-m-d")))',
+                        'type' => 'html'
+                ),
 		array(
 			'class'=>'CButtonColumn',
 		),

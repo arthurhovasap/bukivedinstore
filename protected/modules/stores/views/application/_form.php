@@ -3,7 +3,6 @@
 /* @var $model Application */
 /* @var $form CActiveForm */
 
-$code = app::getParam('code');
 ?>
 <div class="form">
 
@@ -22,7 +21,7 @@ $code = app::getParam('code');
         <div class="col-md-6">
             <?php 
                 if ($model->isNewRecord) { 
-                    if (!is_null ($code)) : ?>
+                    if (isset($code) && !is_null ($code)) : ?>
                     <div class="form-group">
                             <?php echo $form->labelEx($model,'code'); ?>
                             <?php echo $form->textField($model,'code',array('class' => 'form-control', 'size'=>50,'maxlength'=>50, 'readonly'=>'readonly', 'value'=>$code)); ?>

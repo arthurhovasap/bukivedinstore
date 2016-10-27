@@ -3,7 +3,8 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Заявки',
+	'Заявки' => array('/stores/application'),
+        $id
 );
 
 $this->menu=array(
@@ -12,9 +13,9 @@ $this->menu=array(
 );
 ?>
 
-<h1>Заявки</h1>
+<h1>Дата: <?php echo $id; ?></h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+	'itemView'=>'_viewdate',
 )); ?>

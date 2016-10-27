@@ -11,12 +11,14 @@ $this->menu=array(
 	array('label'=>'Список заявок', 'url'=>array('index')),
 	array('label'=>'Управление заявками', 'url'=>array('admin')),
 );
+
+$code = app::getParam('code');
 ?>
 
 <h1>Создать заявку</h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model, 'code'=>$code)); ?>
 
-
-<!--<iframe src="<?php //echo "http://wfpi.ru/modules/zakaz/storeinfo.php?id=".app::getParam("code"); ?>" width="500" height="400" ></iframe>-->
-<?php print(file_get_contents("http://wfpi.ru/modules/zakaz/storeinfo.php?id=".app::getParam("code")));?>
+<?php if (isset($code))
+    print(file_get_contents("http://wfpi.ru/modules/zakaz/storeinfo.php?id=".app::getParam("code")));
+?>

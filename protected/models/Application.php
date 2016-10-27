@@ -12,12 +12,16 @@
  * @property integer $height
  * @property integer $width
  * @property integer $mass
+ * @property string $created
+ * @property string $updated
  *
  * The followings are the available model relations:
  * @property IsystemsCondition $counttype
  */
 class Application extends CActiveRecord
 {
+        public $nomer_search;
+        public $paper_search;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -41,7 +45,7 @@ class Application extends CActiveRecord
 			array('description', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, code, note, count, paper_id, height, width, mass', 'safe', 'on'=>'search'),
+			array('id, code, note, count, paper_id, height, width, mass, created, updated, nomer_search, paper_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,6 +58,7 @@ class Application extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'paper' => array(self::BELONGS_TO, 'Paper', 'paper_id'),
+                        'zakaz' => array(self::BELONGS_TO, 'Zakaz', 'code'),
 		);
 	}
 
@@ -64,13 +69,17 @@ class Application extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'code' => 'Заказ',
+			'code' => 'Заявка',
+                        'nomer_search' => 'Заказ',
+                        'paper_search' => 'Бумаги',
 			'note' => 'Заметка',
 			'count' => 'Колличество',
-			'paper_id' => 'Тип бумаги',
+			'paper_id' => 'Бумага',
 			'height' => 'Высота',
 			'width' => 'Ширина',
 			'mass' => 'Масса',
+                        'created'=>'Создан',
+                        'updated'=>'Обновлен'
 		);
 	}
 
@@ -100,9 +109,27 @@ class Application extends CActiveRecord
 		$criteria->compare('height',$this->height);
 		$criteria->compare('width',$this->width);
 		$criteria->compare('mass',$this->mass);
-
+                
+                $criteria->with = array( 'zakaz' , 'paper');
+                $criteria->compare( 'zakaz.nomer', $this->nomer_search, true );
+                $criteria->compare( 'paper.title', $this->paper_search, true );
+                
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+                        'sort' => array(
+                                'defaultOrder' => 'nomer',
+                                'attributes' => array(
+                                        'nomer_search' => array(
+                                                'asc' => 'nomer',
+                                                'desc' => 'nomer DESC',
+                                        ),
+                                        'paper_search' => array(
+                                                'asc' => 'title',
+                                                'desc' => 'title DESC',
+                                        ),
+                                        '*',
+                                ),
+                        ),
 		));
 	}
 
@@ -116,4 +143,18 @@ class Application extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        protected function beforeSave()
+        {
+            if(parent::beforeSave()){
+                if($this->isNewRecord){
+                    $this->created=app::date();
+                }else{
+                    $this->updated=app::date();
+                }
+                return true;
+            }else{
+                return false;
+            }
+        }
 }
