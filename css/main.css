@@ -82,3 +82,13 @@ body{
 .status-storage   { color:#FFF; background-color:#000 !important;    }
 .status-client    { color:#0F0; background-color:#000 !important;    }
 .ordered { background-color:#CCFF99 !important;color:#000 !important; }
+
+legend.scheduler-border {
+    width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+}
+
+.grid-view .button-column {
+    width: 63px !important;
+}

@@ -319,7 +319,7 @@ class CalculationsParts extends CActiveRecord
                     LEFT JOIN paper AS p
                     ON p.id = cp.paper_id
                     WHERE z.status <= 210 AND z.raschet <> 0 AND z.nomer NOT LIKE '%!S%' AND cp.paper_type = '' AND cp.paper_id <> 0
-                    ORDER BY cp.stock_status ASC, (cp.lists_price*(1-(cp.lists_min_width*cp.lists_min_height)/(cp.lists_width*cp.lists_height))) DESC, z.date_off ASC";
+                    ORDER BY cp.stock_status ASC, (cp.lists_price*(1-(cp.lists_min_width*cp.lists_min_height)/(cp.lists_width*cp.lists_height))) DESC, z.date_off ASC LIMIT 10";
                 $dataProvider=new CSqlDataProvider($sql, array(
                     'totalItemCount'=>$count,
                     

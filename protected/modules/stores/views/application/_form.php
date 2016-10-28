@@ -2,8 +2,8 @@
 /* @var $this ApplicationController */
 /* @var $model Application */
 /* @var $form CActiveForm */
-
 ?>
+
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -15,8 +15,15 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 	<?php echo $form->errorSummary($model); ?>
-    
-        <p class="note">Поля с <span class="required">*</span> необходимы.</p>
+        <div class="col-md-12">
+            
+            <?php if (isset($code))
+                print(file_get_contents("http://wfpi.ru/modules/zakaz/storeinfo.php?id=".$code->id));
+            ?>
+            
+            <p class="note">Поля с <span class="required">*</span> необходимы.</p>
+        </div>
+        
         
         <div class="col-md-6">
             <?php 
@@ -24,16 +31,23 @@
                     if (isset($code) && !is_null ($code)) : ?>
                     <div class="form-group">
                             <?php echo $form->labelEx($model,'code'); ?>
-                            <?php echo $form->textField($model,'code',array('class' => 'form-control', 'size'=>50,'maxlength'=>50, 'readonly'=>'readonly', 'value'=>$code)); ?>
+                            <?php echo $form->textField($model,'code',array('class' => 'form-control', 'size'=>50,'maxlength'=>50, 'readonly'=>'readonly', 'value'=>$code['id'])); ?>
                             <?php echo $form->error($model,'code'); ?>
                     </div>
-                <?php endif; }else{ ?>
+                <?php endif; }else{ if (!is_null ($code)) : ?>
                     <div class="form-group">
                             <?php echo $form->labelEx($model,'code'); ?>
-                            <?php echo $form->textField($model,'code',array('class' => 'form-control', 'size'=>50,'maxlength'=>50, 'disabled'=>'disabled', 'value'=>$code)); ?>
+                            <?php echo $form->textField($model,'code',array('class' => 'form-control', 'size'=>50,'maxlength'=>50, 'disabled'=>'disabled', 'value'=>$code['id'])); ?>
                     </div>
-                <?php } ?>
+                <?php endif; } ?>
 
+            <div class="form-group">
+                    <?php echo $form->labelEx($model,'state_id'); ?>
+                    <?php $type_list=CHtml::listData(State::model()->findAll(),'id','name'); ?>
+                    <?php echo $form->dropDownList($model, 'state_id', array(''=>Yii::t('t', 'Выберите состояние'))+$type_list, array('class'=>'form-control', 'options' => array($model->state_id=>array('selected'=>true)))); ?>
+                    <?php echo $form->error($model,'state_id'); ?>
+            </div>
+            
             <div class="form-group">
                     <?php echo $form->labelEx($model,'paper_id'); ?>
                     <?php $criteria = new CDbCriteria();

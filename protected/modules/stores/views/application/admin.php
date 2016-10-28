@@ -41,6 +41,7 @@ $('.search-form form').submit(function(){
 	'id'=>'application-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
+        'pagerCssClass' => 'pagination pull-right',
 	'columns'=>array(
 		'id',
 		array(
@@ -49,10 +50,22 @@ $('.search-form form').submit(function(){
                         'type' => 'html'
                 ),
 		'count',
-		array(
+		/*array(
                         'name' => 'paper_search',
                         'value' => 'Chtml::link($data->paper->fullInfo, array("paper", "id" => $data->paper_id))',
                         'type' => 'html'
+                ),*/
+                array( 
+                    'name' => 'paper_id',
+                    'value' => 'Chtml::link($data->paper->fullInfo, array("paper", "id" => $data->paper_id))',
+                    'type' => 'html',
+                    'filter' => CHtml::listData(Paper::model()->findAll(), 'id', 'fullInfo'),
+                ),
+            
+                array( 
+                    'name' => 'state_id',
+                    'value' => '$data->state==null ? "Your text here" : $data->state->name',
+                    'filter' => CHtml::listData(State::model()->findAll(), 'id', 'name'),
                 ),
 		'height',
 		'width',

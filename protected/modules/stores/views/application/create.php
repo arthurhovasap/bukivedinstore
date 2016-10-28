@@ -12,13 +12,8 @@ $this->menu=array(
 	array('label'=>'Управление заявками', 'url'=>array('admin')),
 );
 
-$code = app::getParam('code');
 ?>
 
-<h1>Создать заявку</h1>
+<h1>Создать заявку<?php echo ($code) ? " №: ".$code['nomer'] : ""?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model, 'code'=>$code)); ?>
-
-<?php if (isset($code))
-    print(file_get_contents("http://wfpi.ru/modules/zakaz/storeinfo.php?id=".app::getParam("code")));
-?>

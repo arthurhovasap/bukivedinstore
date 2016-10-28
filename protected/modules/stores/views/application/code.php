@@ -18,11 +18,12 @@ $this->menu=array(
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_viewcode',
+        'pagerCssClass' => 'pagination pull-right',
 )); ?>
-<fieldset><legend>Инфо: </legend>
+<div class="col-md-12">
     <?php 
         $code = app::getParam('id');
         if (isset($code))
             print(file_get_contents("http://wfpi.ru/modules/zakaz/storeinfo.php?id=".$code));
     ?>
-</fieldset>
+</div>

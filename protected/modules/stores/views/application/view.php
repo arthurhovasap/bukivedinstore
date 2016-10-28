@@ -25,8 +25,13 @@ $this->menu=array(
 		array(
                     'label' => $model->getAttributeLabel('code'),
                     'type' => 'raw',
-                    'value' => CHtml::link($model->zakaz->nomer, array('code', 'id'=>$model->code)),
+                    'value' => ($model->code != NULL) ? CHtml::link($model->zakaz->nomer, array('code', 'id'=>$model->code)) : "",
                     'visible'=> ($model->code != NULL) ? true : false,
+                ),
+                array(
+                    'label' => $model->getAttributeLabel('state_id'),
+                    'type' => 'raw',
+                    'value' => CHtml::link(CHtml::encode($model->state->name), array('state', 'id'=>$model->state_id)),
                 ),
                 array(
                     'label' => $model->getAttributeLabel('paper_id'),

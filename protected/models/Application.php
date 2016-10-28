@@ -9,6 +9,7 @@
  * @property string $note
  * @property integer $count
  * @property integer $paper_id
+ * @property integer $state_id
  * @property integer $height
  * @property integer $width
  * @property integer $mass
@@ -38,9 +39,8 @@ class Application extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('count, paper_id', 'required'),
-			array('count, paper_id, height, width, mass', 'numerical', 'integerOnly'=>true),
-			array('code', 'length', 'max'=>50),
+			array('count, paper_id, state_id', 'required'),
+			array('count, paper_id, height, width, mass, code, state_id', 'numerical', 'integerOnly'=>true),
 			array('note', 'length', 'max'=>255),
 			array('description', 'safe'),
 			// The following rule is used by search().
@@ -58,6 +58,7 @@ class Application extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'paper' => array(self::BELONGS_TO, 'Paper', 'paper_id'),
+                        'state' => array(self::BELONGS_TO, 'State', 'state_id'),
                         'zakaz' => array(self::BELONGS_TO, 'Zakaz', 'code'),
 		);
 	}
@@ -75,6 +76,7 @@ class Application extends CActiveRecord
 			'note' => 'Заметка',
 			'count' => 'Колличество',
 			'paper_id' => 'Бумага',
+                        'state_id' => 'Сосотояние',
 			'height' => 'Высота',
 			'width' => 'Ширина',
 			'mass' => 'Масса',
@@ -106,6 +108,7 @@ class Application extends CActiveRecord
 		$criteria->compare('note',$this->note,true);
 		$criteria->compare('count',$this->count);
 		$criteria->compare('paper_id',$this->paper_id);
+                $criteria->compare('state_id',$this->state_id);
 		$criteria->compare('height',$this->height);
 		$criteria->compare('width',$this->width);
 		$criteria->compare('mass',$this->mass);

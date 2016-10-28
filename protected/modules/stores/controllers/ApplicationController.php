@@ -74,8 +74,15 @@ class ApplicationController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
+                $id = app::getParam('code');
+                if ($id)
+                    $code = Zakaz::model()->findByPk($id);
+                else
+                    $code = null;
+                
 		$this->render('create',array(
 			'model'=>$model,
+                        'code'=>$code,
 		));
 	}
 
@@ -97,7 +104,6 @@ class ApplicationController extends Controller
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
-
 		$this->render('update',array(
 			'model'=>$model,
 		));

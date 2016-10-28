@@ -200,16 +200,12 @@ $where = '';
     <td><?php echo $order['lists_min_weight'] ?></td>
     <td><?php echo $order['lists_price'] ?></td>
     <td><?php echo $order['lists_price']-$order['lists_min_price'] ?></td>
-    <!--<td><?php //echo ($order['stock_status'] == "ordered") ? "заказан" : ""; ?></td>-->
-    <!--<td><?php //echo $order['stock_date'] && $order['stock_date'] != '0000-00-00' ? date_create($order['stock_date'])->format('Y-m-d') : '' ?></td>-->
-    <!--<td><?php //echo $order['stock_name'] ?></td>-->
-    <!--<td><?php //echo $order['stock_roller_width'] ? $order['stock_roller_width'] : '' ?></td>-->
-    <!--<td><?php //echo $order['stock_comment'] ?></td>-->
     <td><?php echo $order['machine_name'] ? "{$order['machine_name']} ({$places[$order['machine_place']]})" : 'Без печати' ?></td>
     <td>
-        <a class="btn btn-link" href="<?php echo "#".$order['nomer']; ?>">Заказать</a>
+        <?php echo CHtml::link("Заказать", array("application/create", "code"=>$order['order_id'])); ?>
     </td>
   </tr>
 <?php endforeach; ?>
   </tbody>
 </table>
+<span class="text-right text-info">1 2 3 4 ... n</span>
