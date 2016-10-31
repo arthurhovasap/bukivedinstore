@@ -49,12 +49,15 @@ $('.search-form form').submit(function(){
                         'value' => '($data->code) ? Chtml::link($data->zakaz->nomer, array("code", "id" => $data->code)) : NULL',
                         'type' => 'html'
                 ),
-		'count',
-		/*array(
-                        'name' => 'paper_search',
-                        'value' => 'Chtml::link($data->paper->fullInfo, array("paper", "id" => $data->paper_id))',
-                        'type' => 'html'
-                ),*/
+		array(
+                    'name'=>'count',
+                    'value'=>function($data){
+                        return $data->count."(".$data->getDialyCount().")";
+                    },
+                    'type'=>'text',
+                    'footer'=>$model->getTotals($model->search()->getKeys()),
+                ),
+
                 array( 
                     'name' => 'paper_id',
                     'value' => 'Chtml::link($data->paper->fullInfo, array("paper", "id" => $data->paper_id))',
@@ -70,10 +73,29 @@ $('.search-form form').submit(function(){
 		'height',
 		'width',
 		'mass',
-                array(
+                /*array(
                         'name' => 'created',
                         'value' => 'Chtml::link(app::datetimeUserFriendly(CHtml::encode($data->created)), array("date", "id" => app::dateTimeByFormat($data->created, "Y-m-d")))',
                         'type' => 'html'
+                ),*/
+                array(
+                        'name' => 'created_from',
+                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "Y-m-d"), array("date", "id" => app::dateTimeByFormat($data->created, "Y-m-d")))',
+                        'type' => 'html'
+                ),
+                array(
+                        'name' => 'created_to',
+                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "Y-m-d"), array("date", "id" => app::dateTimeByFormat($data->created, "Y-m-d")))',
+                        'type' => 'html'
+                ),
+                array(
+                    'name'=>'total_count',
+                    'value'=>function($data){
+                        return $data->getDialyCount();
+                    },
+                    'type'=>'text',
+                    'filter'=>false,
+                    'footer'=>$model->getTotals($model->search()->getKeys()),
                 ),
 		array(
 			'class'=>'CButtonColumn',
