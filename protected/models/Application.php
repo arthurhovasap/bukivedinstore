@@ -75,7 +75,7 @@ class Application extends CActiveRecord {
             'nomer_search' => 'Заказ',
             'paper_search' => 'Бумаги',
             'note' => 'Заметка',
-            'count' => 'Колличество',
+            'count' => 'Колл',
             'paper_id' => 'Бумага',
             'state_id' => 'Сосотояние',
             'height' => 'Высота',
@@ -85,7 +85,7 @@ class Application extends CActiveRecord {
             'created_from' => 'Дата с',
             'created_to' => 'Дата до',
             'updated' => 'Обновлен',
-            'total_count'=>'Итог'
+            'total_count'=>'День'
         );
     }
 
@@ -142,6 +142,9 @@ class Application extends CActiveRecord {
                     '*',
                 ),
             ),
+            'pagination' => array (
+                'PageSize' => 50 //edit your number items per page here
+            ),
         ));
     }
 
@@ -173,15 +176,37 @@ class Application extends CActiveRecord {
         if ($ids){
             $connection = Yii::app()->db;
             $command = $connection->createCommand("SELECT SUM(count) FROM `isystems_application` where id in ($ids)");
-            return "Колличество: " . $amount = $command->queryScalar();
+            return $command->queryScalar();
         }else{
-            return "Нет заявок";
+            return NULL;
         }
     }
 
     public function getDialyCount() {
         $connection = Yii::app()->db;
-        $command = $connection->createCommand("SELECT SUM(count) FROM `isystems_application` where `state_id`=".$this->state_id." AND `paper_id`=".$this->paper_id . " AND `created` LIKE '%".app::dateTimeByFormat($this->created, "Y-m-d")."%'");
+        $command = $connection->createCommand("SELECT SUM(count) FROM `isystems_application` where `width`='".$this->width."' AND `height`='".$this->height."' AND `state_id`=".$this->state_id." AND `paper_id`=".$this->paper_id . " AND `created` LIKE '%".app::dateTimeByFormat($this->created, "Y-m-d")."%'");
         return $amount = $command->queryScalar();
+    }
+    
+    public function uniqueCount($ids) {
+        $ids = implode(",", $ids);
+        if ($ids){
+            $connection = Yii::app()->db;
+            $command = $connection->createCommand("SELECT COUNT(*) c FROM `isystems_application` t JOIN `isystems_application` t1 ON `t`.`width` = `t1`.`width` AND `t`.`height` = `t1`.`height` AND `t`.`paper_id` = `t1`.`paper_id` WHERE `t`.`id` in ($ids) HAVING c > 1");
+            $count = $command->queryScalar();
+            
+            $connection1 = Yii::app()->db;
+            $command1 = $connection1->createCommand("SELECT COUNT(*) FROM `isystems_application` t WHERE `t`.`id` in ($ids)");
+            $count_large = $command1->queryScalar();
+            return ($count) ? $count : NULL;
+        }else{
+            return NULL;
+        }
+    }
+    
+    public function uniqueStoreOne($pk) {
+        /*$model = Application::model()->findByPk($pk[0]);
+        return CHtml::link("В склад", "asd");*/
+        return "asd";
     }
 }

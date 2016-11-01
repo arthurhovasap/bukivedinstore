@@ -41,6 +41,7 @@ $('.search-form form').submit(function(){
 	'id'=>'application-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
+        'afterAjaxUpdate' => 'reinstallDatePicker', // (#1)
         'pagerCssClass' => 'pagination pull-right',
 	'columns'=>array(
 		'id',
@@ -49,19 +50,19 @@ $('.search-form form').submit(function(){
                         'value' => '($data->code) ? Chtml::link($data->zakaz->nomer, array("code", "id" => $data->code)) : NULL',
                         'type' => 'html'
                 ),
-		array(
+		/*array(
                     'name'=>'count',
                     'value'=>function($data){
                         return $data->count."(".$data->getDialyCount().")";
                     },
                     'type'=>'text',
                     'footer'=>$model->getTotals($model->search()->getKeys()),
-                ),
+                ),*/
 
                 array( 
                     'name' => 'paper_id',
-                    'value' => 'Chtml::link($data->paper->fullInfo, array("paper", "id" => $data->paper_id))',
-                    'type' => 'html',
+                    'value' => 'Chtml::link($data->paper->fullInfo, app::$void0, array("class" => "paperSelector", "data-id" => $data->paper_id, "onclick"=>"clickone(this)"))',
+                    'type' => 'raw',
                     'filter' => CHtml::listData(Paper::model()->findAll(), 'id', 'fullInfo'),
                 ),
             
@@ -72,7 +73,6 @@ $('.search-form form').submit(function(){
                 ),
 		'height',
 		'width',
-		'mass',
                 /*array(
                         'name' => 'created',
                         'value' => 'Chtml::link(app::datetimeUserFriendly(CHtml::encode($data->created)), array("date", "id" => app::dateTimeByFormat($data->created, "Y-m-d")))',
@@ -80,14 +80,55 @@ $('.search-form form').submit(function(){
                 ),*/
                 array(
                         'name' => 'created_from',
-                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "Y-m-d"), array("date", "id" => app::dateTimeByFormat($data->created, "Y-m-d")))',
-                        'type' => 'html'
+                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), array("date", "id" => app::dateTimeByFormat($data->created, "d.m.Y")))',
+                        'type' => 'html',
+                        'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                            'model'=>$model, 
+                            'attribute'=>'created_from', 
+                            'language' => 'ru',
+                            // 'i18nScriptFile' => 'jquery.ui.datepicker-ru.js', (#2)
+                            'htmlOptions' => array(
+                                'id' => 'datepicker_for_created_from',
+                                'size' => '10',
+                            ),
+                            'defaultOptions' => array(  // (#3)
+                                'showOn' => 'focus', 
+                                'dateFormat' => 'dd.mm.yy',
+                                'showOtherMonths' => true,
+                                'selectOtherMonths' => true,
+                                'changeMonth' => true,
+                                'changeYear' => true,
+                                'showButtonPanel' => true,
+                            )
+                        ), 
+                        true), // (#4)
                 ),
                 array(
                         'name' => 'created_to',
-                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "Y-m-d"), array("date", "id" => app::dateTimeByFormat($data->created, "Y-m-d")))',
-                        'type' => 'html'
+                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), array("date", "id" => app::dateTimeByFormat($data->created, "d.m.Y")))',
+                        'type' => 'html',
+                        'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                            'model'=>$model, 
+                            'attribute'=>'created_to', 
+                            'language' => 'ru',
+                            // 'i18nScriptFile' => 'jquery.ui.datepicker-ru.js', (#2)
+                            'htmlOptions' => array(
+                                'id' => 'datepicker_for_created_to',
+                                'size' => '10',
+                            ),
+                            'defaultOptions' => array(  // (#3)
+                                'showOn' => 'focus', 
+                                'dateFormat' => 'dd.mm.yy',
+                                'showOtherMonths' => true,
+                                'selectOtherMonths' => true,
+                                'changeMonth' => true,
+                                'changeYear' => true,
+                                'showButtonPanel' => true,
+                            )
+                        ), 
+                        true), // (#4)
                 ),
+                'count',
                 array(
                     'name'=>'total_count',
                     'value'=>function($data){
@@ -95,10 +136,21 @@ $('.search-form form').submit(function(){
                     },
                     'type'=>'text',
                     'filter'=>false,
-                    'footer'=>$model->getTotals($model->search()->getKeys()),
+                    'footer'=>($model->uniqueCount($model->search()->getKeys())) ? $model->getTotals($model->search()->getKeys()) : "",
                 ),
+                            
 		array(
 			'class'=>'CButtonColumn',
+                        'footer'=>($model->uniqueCount($model->search()->getKeys())) ? CHtml::link("Добавить", "#", array("class"=>"add-to-store-fin btn btn-success")) : ""
 		),
 	),
-)); ?>
+)); 
+// (#5)
+Yii::app()->clientScript->registerScript('re-install-date-picker', "
+function reinstallDatePicker(id, data) {
+    $('#datepicker_for_created_from').datepicker(jQuery.extend({showMonthAfterYear:false},jQuery.datepicker.regional['ru'],{'dateFormat':'dd.mm.yy'}));
+    
+    $('#datepicker_for_created_to').datepicker(jQuery.extend({showMonthAfterYear:false},jQuery.datepicker.regional['ru'],{'dateFormat':'dd.mm.yy'}));
+}
+");                    
+?>

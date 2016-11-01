@@ -58,4 +58,6 @@ class app {
     public static function params($paramName){
         return Yii::app()->params[$paramName];
     }
+    
+    public static $void0 = "javascript:void(0);";
 }
