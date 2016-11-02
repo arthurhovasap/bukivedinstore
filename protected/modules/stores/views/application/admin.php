@@ -28,6 +28,14 @@ $('.search-form form').submit(function(){
 
 <h1>Управление заявками</h1>
 
+<?php if(Yii::app()->user->hasFlash('status')): ?>
+
+<div class="flash-success">
+	<?php echo Yii::app()->user->getFlash('status'); ?>
+</div>
+
+<?php endif; ?>
+
 <p>Вы можете дополнительно ввести оператор сравнения (<, <=,>,> =, <> или =) в начале каждого из значений поиска, чтобы указать, как сравнение должно быть сделано.</p>
 
 <?php //echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
@@ -128,20 +136,32 @@ $('.search-form form').submit(function(){
                         ), 
                         true), // (#4)
                 ),
-                'count',
-                array(
+                
+                /*array(
                     'name'=>'total_count',
                     'value'=>function($data){
-                        return $data->getDialyCount();
+                        return "<span class='center-block text-center bg-" .(($data->status_id == 3) ? "danger" : "warning"). " text-".(($data->status_id == 3) ? "danger" : "warning")."'><b>".$data->getDialyCount()."</b></span>";
                     },
-                    'type'=>'text',
+                    'type'=>'html',
+                    'filter'=>false,
+                    //'footer'=>($model->uniqueCount($model->search()->getKeys())) ? $model->getTotals($model->search()->getKeys()) : "",
+                ),
+                array( 
+                    'name' => 'status_id',
+                    'value' => '$data->status_id==3 ? "Your text here" : $data->state->name',
+                    'filter' => CHtml::listData(State::model()->findAll(), 'id', 'name'),
+                ),*/            
+                array(
+                    'name'=>'count',
+                    'value'=>'$data->countByStatus()',
+                    'type'=>'html',
                     'filter'=>false,
                     'footer'=>($model->uniqueCount($model->search()->getKeys())) ? $model->getTotals($model->search()->getKeys()) : "",
                 ),
                             
 		array(
 			'class'=>'CButtonColumn',
-                        'footer'=>($model->uniqueCount($model->search()->getKeys())) ? CHtml::link("Добавить", "#", array("class"=>"add-to-store-fin btn btn-success")) : ""
+                        'footer'=>$model->buttonByStatus($model->search()->getKeys())
 		),
 	),
 )); 

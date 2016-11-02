@@ -28,7 +28,7 @@ class ApplicationController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index', 'view', 'code', 'paper', 'date'),
+				'actions'=>array('index', 'view', 'code', 'paper', 'date', 'changestatus'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -254,4 +254,13 @@ class ApplicationController extends Controller
                         'id'=>$id
                 ));          
 	}
+        
+        public function actionChangestatus(){
+            $ids = Yii::app()->request->getQuery('ids');
+            $connection = Yii::app()->db;
+            $command = $connection->createCommand("UPDATE `isystems_application` t SET `status_id`=1, `updated`='".app::date()."' WHERE `t`.`id` in ($ids)");
+            $assoc = $command->execute();
+            Yii::app()->user->setFlash('status','Ваша заявка успешно принята.');
+            $this->redirect(array('admin'));
+        }
 }

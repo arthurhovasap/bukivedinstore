@@ -15,6 +15,7 @@
  * @property integer $mass
  * @property string $created
  * @property string $updated
+ * @property integer $status_id
  *
  * The followings are the available model relations:
  * @property IsystemsCondition $counttype
@@ -42,13 +43,13 @@ class Application extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('count, paper_id, state_id', 'required'),
-            array('count, paper_id, height, width, mass, code, state_id, summary', 'numerical', 'integerOnly' => true),
+            array('count, paper_id, state_id, status_id', 'required'),
+            array('count, paper_id, height, width, mass, code, state_id, summary, status_id', 'numerical', 'integerOnly' => true),
             array('note', 'length', 'max' => 255),
             array('description', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, code, note, count, paper_id, height, width, mass, created, updated, nomer_search, created_from, total_count, created_to, paper_search, summary', 'safe', 'on' => 'search'),
+            array('id, code, note, count, paper_id, height, width, mass, created, updated, nomer_search, created_from, status_id, total_count, created_to, paper_search, summary', 'safe', 'on' => 'search'),
         );
     }
 
@@ -61,6 +62,7 @@ class Application extends CActiveRecord {
         return array(
             'paper' => array(self::BELONGS_TO, 'Paper', 'paper_id'),
             'state' => array(self::BELONGS_TO, 'State', 'state_id'),
+            'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
             'zakaz' => array(self::BELONGS_TO, 'Zakaz', 'code'),
         );
     }
@@ -78,6 +80,7 @@ class Application extends CActiveRecord {
             'count' => 'Колл',
             'paper_id' => 'Бумага',
             'state_id' => 'Сосотояние',
+            'status_id' => 'Статус',
             'height' => 'Высота',
             'width' => 'Ширина',
             'mass' => 'Масса',
@@ -85,7 +88,7 @@ class Application extends CActiveRecord {
             'created_from' => 'Дата с',
             'created_to' => 'Дата до',
             'updated' => 'Обновлен',
-            'total_count'=>'День'
+            'total_count'=>'В день'
         );
     }
 
@@ -117,6 +120,7 @@ class Application extends CActiveRecord {
         $criteria->compare('count', $this->count);
         $criteria->compare('paper_id', $this->paper_id);
         $criteria->compare('state_id', $this->state_id);
+        $criteria->compare('status_id', $this->status_id);
         $criteria->compare('height', $this->height);
         $criteria->compare('width', $this->width);
         $criteria->compare('mass', $this->mass);
@@ -192,13 +196,14 @@ class Application extends CActiveRecord {
         $ids = implode(",", $ids);
         if ($ids){
             $connection = Yii::app()->db;
-            $command = $connection->createCommand("SELECT COUNT(*) c FROM `isystems_application` t JOIN `isystems_application` t1 ON `t`.`width` = `t1`.`width` AND `t`.`height` = `t1`.`height` AND `t`.`paper_id` = `t1`.`paper_id` WHERE `t`.`id` in ($ids) HAVING c > 1");
-            $count = $command->queryScalar();
-            
-            $connection1 = Yii::app()->db;
-            $command1 = $connection1->createCommand("SELECT COUNT(*) FROM `isystems_application` t WHERE `t`.`id` in ($ids)");
-            $count_large = $command1->queryScalar();
-            return ($count) ? $count : NULL;
+            $command = $connection->createCommand("SELECT `t`.`width`, `t`.`height`, `t`.`state_id`, `t`.`paper_id`, `t`.`status_id` FROM `isystems_application` t WHERE `t`.`id` in ($ids)");
+            $assoc = $command->queryAll();
+            $assoc = array_map("unserialize", array_unique(array_map("serialize", $assoc)));
+            if (count($assoc) == 1){
+                return $assoc[0]['status_id'];//1 or 3
+            }else{
+                return false;
+            }
         }else{
             return NULL;
         }
@@ -208,5 +213,34 @@ class Application extends CActiveRecord {
         /*$model = Application::model()->findByPk($pk[0]);
         return CHtml::link("В склад", "asd");*/
         return "asd";
+    }
+    
+    public function updateStatus($ids){
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand("UPDATE `t`.`status_id` FROM `isystems_application` t WHERE `t`.`id` in ($ids)");
+        $assoc = $command->queryAll();
+    }
+    
+    public function buttonByStatus($ids){
+        $uniquecount = $this->uniqueCount($ids);
+        if ($uniquecount){
+            if ($uniquecount != 1){
+                return CHtml::link(
+                    'Заказать',
+                     array('application/changestatus','ids'=>implode(",", $ids)),
+                     array('confirm' => 'Вы уверены что сделали заказ?', 'class'=>'add-to-store-fin btn btn-danger')
+                );
+                //return CHtml::link("Заказать", implode(",", $ids), array("class"=>"add-to-store-fin btn btn-danger"));
+            }else{
+                return CHtml::link("На склад", implode(",", $ids), array("class"=>"add-to-store-fin btn btn-warning"));
+            }  
+        }
+        else{
+            return "";
+        }
+    }
+    
+    public function countByStatus(){
+        return preg_replace("/&#?[a-z0-9]+;/i","","<span class='center-block text-center bg-" .(($this->status_id == 3) ? "danger" : "warning"). " text-".(($this->status_id == 3) ? "danger" : "warning")."'><b>".$this->count."</b></span>"); ;
     }
 }
