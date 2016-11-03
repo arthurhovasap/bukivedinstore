@@ -102,3 +102,59 @@ legend.scheduler-border {
 .add-to-store-fin{
     
 }
+
+.grid-view table.items tr.even.bg-ok,
+.grid-view table.items tr.odd.bg-ok{
+    background: lightyellow;
+}
+
+.grid-view table.items tr.bg-ok.selected {
+    background: #BCE774;
+}
+
+.grid-view table.items tr.even.bg-finstore,
+.grid-view table.items tr.odd.bg-finstore{
+    background: lightgreen;
+}
+
+.viewstore a{
+    display: block;
+    padding: 50px;
+    font-weight: bold;
+}
+
+.viewstore a:hover{
+    text-decoration: none;
+}
+
+.viewstore1{
+    background: lightblue;   
+}
+
+.viewstore1 a{
+    color: blue;
+}
+
+.viewstore2{
+    background: lightcoral;
+}
+
+.viewstore2 a{
+    color: graytext;
+}
+
+.viewstore3{
+    background: lightsteelblue;    
+}
+
+.viewstore3 a{
+    color: steelblue;
+}
+
+.viewstore4{
+    background: lightgoldenrodyellow;
+}
+
+.viewstore4 a{
+    color: goldenrod;
+}

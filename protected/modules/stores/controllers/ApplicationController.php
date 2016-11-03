@@ -28,7 +28,7 @@ class ApplicationController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index', 'view', 'code', 'paper', 'date', 'changestatus'),
+				'actions'=>array('index', 'view', 'code', 'paper', 'date', 'changestatus', 'fillstore'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -261,6 +261,19 @@ class ApplicationController extends Controller
             $command = $connection->createCommand("UPDATE `isystems_application` t SET `status_id`=1, `updated`='".app::date()."' WHERE `t`.`id` in ($ids)");
             $assoc = $command->execute();
             Yii::app()->user->setFlash('status','Ваша заявка успешно принята.');
+            $this->redirect(array('admin'));
+        }
+        
+        public function actionFillstore(){
+            $ids = Yii::app()->request->getQuery('ids');
+            foreach ($ids as $id){
+                $model = new Store();
+                $model->type_id = 1;
+                $model->application_id = intval ($id);
+                $model->created = app::date();
+                $model->save();
+            }
+            Yii::app()->user->setFlash('status','Заявки перемещены на склад успешно.');
             $this->redirect(array('admin'));
         }
 }

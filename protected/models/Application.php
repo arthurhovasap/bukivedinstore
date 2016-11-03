@@ -49,7 +49,7 @@ class Application extends CActiveRecord {
             array('description', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, code, note, count, paper_id, height, width, mass, created, updated, nomer_search, created_from, status_id, total_count, created_to, paper_search, summary', 'safe', 'on' => 'search'),
+            array('id, code, note, count, paper_id, height, width, mass, created, updated, nomer_search, created_from, status_id, total_count, created_to, paper_search, summary', 'safe', 'on' => 'search, search_fin'),
         );
     }
 
@@ -110,21 +110,70 @@ class Application extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         if(!empty($this->created_from) && !empty($this->created_to)){
-            $criteria->addBetweenCondition('created', date('Y-m-d', strtotime('0 day', strtotime($this->created_from))), date('Y-m-d', strtotime('1 day', strtotime($this->created_to))), 'AND');
+            $criteria->addBetweenCondition('t.created', date('Y-m-d', strtotime('0 day', strtotime($this->created_from))), date('Y-m-d', strtotime('1 day', strtotime($this->created_to))), 'AND');
         }else{
-            $criteria->compare('created', $this->created, true);
+            $criteria->compare('t.created', $this->created, true);
         }
-        $criteria->compare('id', $this->id);
-        $criteria->compare('code', $this->code, true);
-        $criteria->compare('note', $this->note, true);
-        $criteria->compare('count', $this->count);
-        $criteria->compare('paper_id', $this->paper_id);
-        $criteria->compare('state_id', $this->state_id);
-        $criteria->compare('status_id', $this->status_id);
-        $criteria->compare('height', $this->height);
-        $criteria->compare('width', $this->width);
-        $criteria->compare('mass', $this->mass);
-        //$criteria->compare('created', $this->created, true);
+        $criteria->compare('t.id', $this->id);
+        $criteria->compare('t.code', $this->code, true);
+        $criteria->compare('t.note', $this->note, true);
+        $criteria->compare('t.count', $this->count);
+        $criteria->compare('t.paper_id', $this->paper_id);
+        $criteria->compare('t.state_id', $this->state_id);
+        $criteria->compare('t.status_id', $this->status_id);
+        $criteria->compare('t.height', $this->height, true);
+        $criteria->compare('t.width', $this->width, true);
+        $criteria->compare('t.mass', $this->mass);
+
+        $criteria->with = array('zakaz', 'paper');
+        $criteria->compare('zakaz.nomer', $this->nomer_search, true);
+        $criteria->compare('paper.title', $this->paper_search, true);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => 'nomer',
+                'attributes' => array(
+                    'nomer_search' => array(
+                        'asc' => 'nomer',
+                        'desc' => 'nomer DESC',
+                    ),
+                    'paper_search' => array(
+                        'asc' => 'title',
+                        'desc' => 'title DESC',
+                    ),
+                    '*',
+                ),
+            ),
+            'pagination' => array (
+                'PageSize' => 50 //edit your number items per page here
+            ),
+        ));
+    }
+    
+    public function search_fin() {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+
+        $criteria = new CDbCriteria;
+
+        if(!empty($this->created_from) && !empty($this->created_to)){
+            $criteria->addBetweenCondition('t.created', date('Y-m-d', strtotime('0 day', strtotime($this->created_from))), date('Y-m-d', strtotime('1 day', strtotime($this->created_to))), 'AND');
+        }else{
+            $criteria->compare('t.created', $this->created, true);
+        }
+        $criteria->compare('t.id', $this->id);
+        $criteria->compare('t.code', $this->code, true);
+        $criteria->compare('t.note', $this->note, true);
+        $criteria->compare('t.count', $this->count);
+        $criteria->compare('t.paper_id', $this->paper_id);
+        $criteria->compare('t.state_id', $this->state_id);
+        $criteria->compare('t.status_id', $this->status_id);
+        $criteria->compare('t.height', $this->height, true);
+        $criteria->compare('t.width', $this->width, true);
+        $criteria->compare('t.mass', $this->mass);
+        $criteria->join = "RIGHT JOIN `isystems_store` fn ON fn.application_id = t.id";
+        $criteria->group = "fn.application_id";
+        $criteria->compare('created', $this->created, true);
 
         $criteria->with = array('zakaz', 'paper');
         $criteria->compare('zakaz.nomer', $this->nomer_search, true);
@@ -200,6 +249,7 @@ class Application extends CActiveRecord {
             $assoc = $command->queryAll();
             $assoc = array_map("unserialize", array_unique(array_map("serialize", $assoc)));
             if (count($assoc) == 1){
+                
                 return $assoc[0]['status_id'];//1 or 3
             }else{
                 return false;
@@ -222,25 +272,67 @@ class Application extends CActiveRecord {
     }
     
     public function buttonByStatus($ids){
+        $count = count($ids);
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand("SELECT COUNT(`t`.`id`) FROM `isystems_store` t WHERE `t`.`application_id` in (".implode(",", $ids).")");
+        $rcount = $command->queryScalar();
+        
         $uniquecount = $this->uniqueCount($ids);
-        if ($uniquecount){
-            if ($uniquecount != 1){
-                return CHtml::link(
-                    'Заказать',
-                     array('application/changestatus','ids'=>implode(",", $ids)),
-                     array('confirm' => 'Вы уверены что сделали заказ?', 'class'=>'add-to-store-fin btn btn-danger')
-                );
-                //return CHtml::link("Заказать", implode(",", $ids), array("class"=>"add-to-store-fin btn btn-danger"));
-            }else{
-                return CHtml::link("На склад", implode(",", $ids), array("class"=>"add-to-store-fin btn btn-warning"));
-            }  
-        }
-        else{
-            return "";
+        if ($count != $rcount){
+            if ($uniquecount){
+                if ($uniquecount != 1){
+                    return CHtml::link(
+                        'Заказать',
+                         array('application/changestatus','ids'=>implode(",", $ids)),
+                         array('confirm' => 'Вы уверены что сделали заказ?', 'class'=>'add-to-store-fin btn btn-danger')
+                    );
+                    //return CHtml::link("Заказать", implode(",", $ids), array("class"=>"add-to-store-fin btn btn-danger"));
+                }else{
+                    return CHtml::link(
+                        'На склад',
+                        array('application/fillstore','ids'=>$ids),
+                        array('confirm' => 'Переместить на склад?', 'class'=>'add-to-store-fin btn btn-warning')
+                    );
+                }  
+            }
+            else{
+                return "";
+            }
+        }else{
+            return CHtml::link(
+                'На складе',
+                array('application/onstore','ids'=>$ids),
+                array('confirm' => 'Посмотреть детали?', 'class'=>'add-to-store-fin btn btn-success')
+            );
         }
     }
     
     public function countByStatus(){
         return preg_replace("/&#?[a-z0-9]+;/i","","<span class='center-block text-center bg-" .(($this->status_id == 3) ? "danger" : "warning"). " text-".(($this->status_id == 3) ? "danger" : "warning")."'><b>".$this->count."</b></span>"); ;
+    }
+    
+    public function statusClassGenerator(){
+        if ($this->ifIdExistsInStore()){
+            return " bg-finstore ";
+        }else{
+            if ($this->status_id == 1){
+                return " bg-ok ";
+            }else{
+                return "";
+            }
+        }
+    }
+    
+    public function ifIdExistsInStore(){
+        $criteria = new CDbCriteria();
+        $criteria->select = "id";
+        $criteria->condition = "application_id=:application_id";
+        $criteria->params = array(":application_id" => $this->id);
+        $model = Store::model()->find($criteria);
+        if ($model){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
     }
 }

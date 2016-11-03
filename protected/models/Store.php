@@ -1,26 +1,29 @@
 <?php
 
 /**
- * This is the model class for table "isystems_type".
+ * This is the model class for table "isystems_store".
  *
- * The followings are the available columns in table 'isystems_type':
+ * The followings are the available columns in table 'isystems_store':
  * @property integer $id
- * @property string $name
- * @property string $description
- * @property integer $status_id
+ * @property integer $application_id
+ * @property string $created
+ * @property string $updated
+ * @property integer $count
+ * @property integer $type_id
+ * @property string $note
  *
  * The followings are the available model relations:
- * @property IsystemsStore[] $isystemsStores
- * @property IsystemsStatus $status
+ * @property IsystemsApplication $application
+ * @property IsystemsType $type
  */
-class Type extends CActiveRecord
+class Store extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'isystems_type';
+		return 'isystems_store';
 	}
 
 	/**
@@ -31,13 +34,12 @@ class Type extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, status_id', 'required'),
-			array('status_id', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>255),
-			array('description', 'safe'),
+			array('application_id, created, type_id', 'required'),
+			array('application_id, count, type_id', 'numerical', 'integerOnly'=>true),
+			array('note', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, description, status_id', 'safe', 'on'=>'search'),
+			array('id, application_id, created, updated, count, type_id, note', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,8 +51,8 @@ class Type extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'store' => array(self::HAS_MANY, 'Store', 'type_id'),
-			'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
+			'application' => array(self::BELONGS_TO, 'Application', 'application_id'),
+			'type' => array(self::BELONGS_TO, 'Type', 'type_id'),
 		);
 	}
 
@@ -61,9 +63,12 @@ class Type extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
-			'description' => 'Description',
-			'status_id' => 'Status',
+			'application_id' => 'Application',
+			'created' => 'Created',
+			'updated' => 'Updated',
+			'count' => 'Count',
+			'type_id' => 'Type',
+			'note' => 'Note',
 		);
 	}
 
@@ -86,9 +91,12 @@ class Type extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('status_id',$this->status_id);
+		$criteria->compare('application_id',$this->application_id);
+		$criteria->compare('created',$this->created,true);
+		$criteria->compare('updated',$this->updated,true);
+		$criteria->compare('count',$this->count);
+		$criteria->compare('type_id',$this->type_id);
+		$criteria->compare('note',$this->note,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -99,7 +107,7 @@ class Type extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Type the static model class
+	 * @return Store the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
