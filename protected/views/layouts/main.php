@@ -3,7 +3,7 @@
 <html ng-app="App">
     <head>
         <?php $this->renderPartial('application.views.partial.scripts'); ?>
-        
+        <meta name="robots" content="noindex, follow"/>
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
         <script>

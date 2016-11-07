@@ -272,6 +272,7 @@ class Application extends CActiveRecord {
     }
     
     public function buttonByStatus($ids){
+        if ($ids){
         $count = count($ids);
         $connection = Yii::app()->db;
         $command = $connection->createCommand("SELECT COUNT(`t`.`id`) FROM `isystems_store` t WHERE `t`.`application_id` in (".implode(",", $ids).")");
@@ -289,7 +290,7 @@ class Application extends CActiveRecord {
                     //return CHtml::link("Заказать", implode(",", $ids), array("class"=>"add-to-store-fin btn btn-danger"));
                 }else{
                     return CHtml::link(
-                        'На склад',
+                        'В ожидании',
                         array('application/fillstore','ids'=>$ids),
                         array('confirm' => 'Переместить на склад?', 'class'=>'add-to-store-fin btn btn-warning')
                     );
@@ -305,6 +306,8 @@ class Application extends CActiveRecord {
                 array('confirm' => 'Посмотреть детали?', 'class'=>'add-to-store-fin btn btn-success')
             );
         }
+        }else
+            return "";
     }
     
     public function countByStatus(){

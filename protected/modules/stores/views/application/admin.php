@@ -73,18 +73,27 @@ $('.search-form form').submit(function(){
 
                 array( 
                     'name' => 'paper_id',
-                    'value' => 'Chtml::link($data->paper->fullInfo, app::$void0, array("class" => "paperSelector", "data-id" => $data->paper_id, "onclick"=>"clickone(this)"))',
+                    'value' => 'Chtml::link($data->paper->fullInfo, app::$void0, array("class" => "paperSelector", "data-id" => $data->paper_id, "onclick"=>"clickone(this)"))." ".Chtml::link("<span class=\"glyphicon glyphicon-link\"></span>", array("paper", "id" => $data->paper_id))',
                     'type' => 'raw',
                     'filter' => CHtml::listData(Paper::model()->findAll(), 'id', 'fullInfo'),
                 ),
             
                 array( 
                     'name' => 'state_id',
-                    'value' => '$data->state==null ? "Your text here" : $data->state->name',
+                    'type' => 'raw',
+                    'value' => '$data->state==null ? "Your text here" : Chtml::link($data->state->name, app::$void0, array("class" => "stateSelector", "data-id" => $data->state_id, "onclick"=>"clickonestate(this)"))',
                     'filter' => CHtml::listData(State::model()->findAll(), 'id', 'name'),
                 ),
-		'height',
-		'width',
+		array( 
+                    'name' => 'height',
+                    'type' => 'raw',
+                    'value' => '$data->height==null ? "" : Chtml::link($data->height, app::$void0, array("class" => "heightSelector", "data-id" => $data->height, "onclick"=>"clickoneheight(this)"))',
+                ),
+                array( 
+                    'name' => 'width',
+                    'type' => 'raw',
+                    'value' => '$data->width==null ? "" : Chtml::link($data->width, app::$void0, array("class" => "widthSelector", "data-id" => $data->width, "onclick"=>"clickonewidth(this)"))',
+                ),
                 /*array(
                         'name' => 'created',
                         'value' => 'Chtml::link(app::datetimeUserFriendly(CHtml::encode($data->created)), array("date", "id" => app::dateTimeByFormat($data->created, "Y-m-d")))',
@@ -161,6 +170,13 @@ $('.search-form form').submit(function(){
                     'type'=>'html',
                     'filter'=>false,
                     'footer'=>($model->uniqueCount($model->search()->getKeys())) ? $model->getTotals($model->search()->getKeys()) : "",
+                ),
+            
+                array(
+                    'name'=>'status_id',
+                    'value'=>'$data->buttonByStatus(array($data->id))',
+                    'type'=>'html',
+                    'filter' => CHtml::activeDropDownList($model, 'status_id', array_combine(array_values(array("", "3", "1")), array("Все", "Заявки", "В ожидании"))),
                 ),
                             
 		array(

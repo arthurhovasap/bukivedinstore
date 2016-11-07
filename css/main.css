@@ -29,6 +29,38 @@ body{
 .gi-4x{font-size: 4em;}
 .gi-5x{font-size: 5em;}
 
+.gly-spin {
+  -webkit-animation: spin 3s infinite linear;
+  -moz-animation: spin 3s infinite linear;
+  -o-animation: spin 3s infinite linear;
+  animation: spin 3s infinite linear;
+}
+
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+  100% {
+    -o-transform: rotate(359deg);
+  }
+}
+
 /* google maps */
 #map {
     height: 200px;
@@ -158,3 +190,14 @@ legend.scheduler-border {
 .viewstore4 a{
     color: goldenrod;
 }
+
+#application-grid.grid-view tbody .btn{
+    width: 89px;
+    padding: 2px 10px;
+    font-size: 89%;
+    border-radius: 2px;
+} 
+
+#application-grid.grid-view tbody tr td:nth-last-child(2){
+    padding: 0px;
+} 
