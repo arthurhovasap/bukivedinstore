@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Список заявок', 'url'=>array('index')),
+	//array('label'=>'Список заявок', 'url'=>array('index')),
 	array('label'=>'Создать заявку', 'url'=>array('create')),
 );
 
@@ -101,8 +101,8 @@ $('.search-form form').submit(function(){
                 ),*/
                 array(
                         'name' => 'created_from',
-                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), array("date", "id" => app::dateTimeByFormat($data->created, "d.m.Y")))',
-                        'type' => 'html',
+                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), app::$void0, array("class" => "created_fromSelector", "data-id" => app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), "onclick"=>"clickonecreated_from(this)"))',
+                        'type' => 'raw',
                         'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                             'model'=>$model, 
                             'attribute'=>'created_from', 
@@ -126,8 +126,8 @@ $('.search-form form').submit(function(){
                 ),
                 array(
                         'name' => 'created_to',
-                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), array("date", "id" => app::dateTimeByFormat($data->created, "d.m.Y")))',
-                        'type' => 'html',
+                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), app::$void0, array("class" => "created_toSelector", "data-id" => app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), "onclick"=>"clickonecreated_to(this)"))',
+                        'type' => 'raw',
                         'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                             'model'=>$model, 
                             'attribute'=>'created_to', 
@@ -175,8 +175,8 @@ $('.search-form form').submit(function(){
                 array(
                     'name'=>'status_id',
                     'value'=>'$data->buttonByStatus(array($data->id))',
-                    'type'=>'html',
-                    'filter' => CHtml::activeDropDownList($model, 'status_id', array_combine(array_values(array("", "3", "1")), array("Все", "Заявки", "В ожидании"))),
+                    'type'=>'raw',
+                    'filter' => CHtml::activeDropDownList($model, 'status_id', array_combine(array_values(array("", "3", "1")), array("Все", "Заявки", "В ожидании")), array('style' => 'width: 82px;')),
                 ),
                             
 		array(

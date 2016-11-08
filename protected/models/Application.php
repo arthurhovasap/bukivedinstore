@@ -43,7 +43,7 @@ class Application extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('count, paper_id, state_id, status_id', 'required'),
+            array('count, paper_id, state_id', 'required'),
             array('count, paper_id, height, width, mass, code, state_id, summary, status_id', 'numerical', 'integerOnly' => true),
             array('note', 'length', 'max' => 255),
             array('description', 'safe'),
@@ -64,6 +64,7 @@ class Application extends CActiveRecord {
             'state' => array(self::BELONGS_TO, 'State', 'state_id'),
             'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
             'zakaz' => array(self::BELONGS_TO, 'Zakaz', 'code'),
+            'store' => array(self::HAS_MANY, 'Store', 'application_id'),
         );
     }
 
@@ -132,7 +133,7 @@ class Application extends CActiveRecord {
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'sort' => array(
-                'defaultOrder' => 'nomer',
+                'defaultOrder' => 't.id DESC',
                 'attributes' => array(
                     'nomer_search' => array(
                         'asc' => 'nomer',
@@ -182,7 +183,7 @@ class Application extends CActiveRecord {
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'sort' => array(
-                'defaultOrder' => 'nomer',
+                'defaultOrder' => 't.id DESC',
                 'attributes' => array(
                     'nomer_search' => array(
                         'asc' => 'nomer',
@@ -215,6 +216,7 @@ class Application extends CActiveRecord {
         if (parent::beforeSave()) {
             if ($this->isNewRecord) {
                 $this->created = app::date();
+                $this->status_id = 3;
             } else {
                 $this->updated = app::date();
             }

@@ -52,10 +52,10 @@ class TypeController extends Controller
 	public function actionView($id)
 	{
                 $model = $this->loadModel($id);
-                $models=new Application('search');
+                $models=new Store('search');
 		$models->unsetAttributes();  // clear any default values
-		if(isset($_GET['Application']))
-			$models->attributes=$_GET['Application'];
+		if(isset($_GET['Store']))
+			$models->attributes=$_GET['Store'];
 		$this->render('view',array(
 			'model'=>$model,
                         'models'=>$models

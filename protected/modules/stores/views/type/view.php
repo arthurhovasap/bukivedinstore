@@ -20,42 +20,45 @@ $this->breadcrumbs=array(
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'application-grid',
-	'dataProvider'=>$models->search_fin(),
+	'dataProvider'=>$models->search(),
 	'filter'=>$models,
         'afterAjaxUpdate' => 'reinstallDatePicker', // (#1)
         'pagerCssClass' => 'pagination pull-right',
         
 	'columns'=>array(
 		'id',
-		array(
+                'application_id',
+                array(
                         'name' => 'nomer_search',
-                        'value' => '($data->code) ? Chtml::link($data->zakaz->nomer, array("code", "id" => $data->code)) : NULL',
-                        'type' => 'html'
+                        'value' => '($data->application->code) ? Chtml::link($data->application->zakaz->nomer ." (".$data->application->zakaz->id.")", app::$void0, array("class" => "stateSelector", "data-id" => $data->application->zakaz->id, "onclick"=>"clickonenomer(this)")) . " " . Chtml::link("<span class=\"glyphicon glyphicon-link\"></span>", array("code", "id" => $data->application->code)): NULL',
+                        'type' => 'raw'
                 ),
-
                 array( 
                     'name' => 'paper_id',
-                    'value' => 'Chtml::link($data->paper->fullInfo, app::$void0, array("class" => "paperSelector", "data-id" => $data->paper_id, "onclick"=>"clickone(this)"))',
                     'type' => 'raw',
+                    'value' => 'Chtml::link($data->application->paper->fullInfo, app::$void0, array("class" => "paperSelector", "data-id" => $data->application->paper_id, "onclick"=>"clickone(this)"))." ".Chtml::link("<span class=\"glyphicon glyphicon-link\"></span>", array("paper", "id" => $data->application->paper_id))',
                     'filter' => CHtml::listData(Paper::model()->findAll(), 'id', 'fullInfo'),
                 ),
-            
                 array( 
                     'name' => 'state_id',
-                    'value' => '$data->state==null ? "Your text here" : $data->state->name',
+                    'type' => 'raw',
+                    'value' => '$data->application->state==null ? "Your text here" : Chtml::link($data->application->state->name, app::$void0, array("class" => "stateSelector", "data-id" => $data->state_id, "onclick"=>"clickonestate(this)"))',
                     'filter' => CHtml::listData(State::model()->findAll(), 'id', 'name'),
                 ),
-		'height',
-		'width',
-                /*array(
-                        'name' => 'created',
-                        'value' => 'Chtml::link(app::datetimeUserFriendly(CHtml::encode($data->created)), array("date", "id" => app::dateTimeByFormat($data->created, "Y-m-d")))',
-                        'type' => 'html'
-                ),*/
+                array( 
+                    'name' => 'height',
+                    'type' => 'raw',
+                    'value' => '$data->application->height==null ? "" : Chtml::link($data->application->height, app::$void0, array("class" => "heightSelector", "data-id" => $data->application->height, "onclick"=>"clickoneheight(this)"))',
+                ),
+                array( 
+                    'name' => 'width',
+                    'type' => 'raw',
+                    'value' => '$data->application->width==null ? "" : Chtml::link($data->application->width, app::$void0, array("class" => "widthSelector", "data-id" => $data->application->width, "onclick"=>"clickonewidth(this)"))',
+                ),
                 array(
                         'name' => 'created_from',
-                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), array("date", "id" => app::dateTimeByFormat($data->created, "d.m.Y")))',
-                        'type' => 'html',
+                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), app::$void0, array("class" => "created_fromSelector", "data-id" => app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), "onclick"=>"clickonecreated_from(this)"))',
+                        'type' => 'raw',
                         'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                             'model'=>$models, 
                             'attribute'=>'created_from', 
@@ -79,8 +82,8 @@ $this->breadcrumbs=array(
                 ),
                 array(
                         'name' => 'created_to',
-                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), array("date", "id" => app::dateTimeByFormat($data->created, "d.m.Y")))',
-                        'type' => 'html',
+                        'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), app::$void0, array("class" => "created_toSelector", "data-id" => app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), "onclick"=>"clickonecreated_to(this)"))',
+                        'type' => 'raw',
                         'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                             'model'=>$models, 
                             'attribute'=>'created_to', 
@@ -102,18 +105,16 @@ $this->breadcrumbs=array(
                         ), 
                         true), // (#4)
                 ),
-                        
                 array(
-                    'name'=>'count',
-                    'value'=>'$data->count',
+                    'name'=>'acount',
+                    'value'=>'$data->application->count',
                     'type'=>'html',
                     'filter'=>false,
-                    //'footer'=>($models->uniqueCount($models->search()->getKeys())) ? $models->getTotals($models->search()->getKeys()) : "",
+                    //'footer'=>($model->uniqueCount($model->search()->getKeys())) ? $model->getTotals($model->search()->getKeys()) : "",
                 ),
-                            
 		array(
 			'class'=>'CButtonColumn',
-                        //'footer'=>$models->buttonByStatus($models->search_fin()->getKeys())
+                        //'footer'=>$model->buttonByStatus($model->search()->getKeys())
 		),
 	),
 )); 

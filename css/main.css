@@ -191,6 +191,14 @@ legend.scheduler-border {
     color: goldenrod;
 }
 
+.viewstore0{
+    background: yellowgreen;
+}
+
+.viewstore0 a{
+    color: #555;
+}
+
 #application-grid.grid-view tbody .btn{
     width: 89px;
     padding: 2px 10px;
@@ -201,3 +209,16 @@ legend.scheduler-border {
 #application-grid.grid-view tbody tr td:nth-last-child(2){
     padding: 0px;
 } 
+
+#application-grid_c9{
+    width: 82px;
+}
+
+/*#application-grid_c6,
+#application-grid_c7{
+    width: 72px;
+}*/
+
+.cursor-default{
+    cursor: default;
+}

@@ -18,6 +18,14 @@
  */
 class Store extends CActiveRecord
 {
+        public $created_from;
+        public $created_to;
+        public $paper_id;
+        public $width;
+        public $height;
+        public $acount;
+        public $state_id;
+        public $nomer_search;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -39,7 +47,7 @@ class Store extends CActiveRecord
 			array('note', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, application_id, created, updated, count, type_id, note', 'safe', 'on'=>'search'),
+			array('id, application_id, created, updated, count, type_id, note, created_to, created_from, paper_id, width, height, acount, state_id, nomer_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,9 +73,12 @@ class Store extends CActiveRecord
 			'id' => 'ID',
 			'application_id' => 'Application',
 			'created' => 'Created',
+                        'created_from' => 'Дата с',
+                        'created_to' => 'Дата до',
 			'updated' => 'Updated',
 			'count' => 'Count',
 			'type_id' => 'Type',
+                        'paper_id' => 'Paper',
 			'note' => 'Note',
 		);
 	}
@@ -90,17 +101,43 @@ class Store extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('application_id',$this->application_id);
-		$criteria->compare('created',$this->created,true);
-		$criteria->compare('updated',$this->updated,true);
-		$criteria->compare('count',$this->count);
-		$criteria->compare('type_id',$this->type_id);
-		$criteria->compare('note',$this->note,true);
+                if(!empty($this->created_from) && !empty($this->created_to)){
+                    $criteria->addBetweenCondition('t.created', date('Y-m-d', strtotime('0 day', strtotime($this->created_from))), date('Y-m-d', strtotime('1 day', strtotime($this->created_to))), 'AND');
+                }else{
+                    $criteria->compare('t.created', $this->created, true);
+                }
+        
+		$criteria->compare('t.id',$this->id);
+		$criteria->compare('t.application_id',$this->application_id);
+		
+		$criteria->compare('t.updated',$this->updated,true);
+		$criteria->compare('t.count',$this->count);
+		$criteria->compare('t.type_id',$this->type_id);
+		$criteria->compare('t.note',$this->note,true);
 
+                
+                $criteria->with = array('application');
+                $criteria->compare('application.paper_id', $this->paper_id, true);
+                $criteria->compare('application.state_id', $this->state_id, true);
+                $criteria->compare('application.width', $this->width, true);
+                $criteria->compare('application.height', $this->height, true);
+                $criteria->compare('application.count', $this->acount, true);
+                $criteria->compare('application.code', $this->nomer_search);
+                //$criteria->compare('application.nomer', $this->nomer_search, true);
+        
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+                    'criteria' => $criteria,
+                    'sort' => array(
+                        'defaultOrder' => 't.id DESC',
+                        'attributes' => array(
+                            
+                            '*',
+                        ),
+                    ),
+                    'pagination' => array (
+                        'PageSize' => 50 //edit your number items per page here
+                    ),
+                ));
 	}
 
 	/**

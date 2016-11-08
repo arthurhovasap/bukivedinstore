@@ -260,7 +260,7 @@ class ApplicationController extends Controller
             $connection = Yii::app()->db;
             $command = $connection->createCommand("UPDATE `isystems_application` t SET `status_id`=1, `updated`='".app::date()."' WHERE `t`.`id` in ($ids)");
             $assoc = $command->execute();
-            Yii::app()->user->setFlash('status','Ваша заявка успешно принята.');
+            Yii::app()->user->setFlash('status','Ваша заказ в ожидании.');
             $this->redirect(array('admin'));
         }
         
