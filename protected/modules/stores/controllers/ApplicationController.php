@@ -270,7 +270,6 @@ class ApplicationController extends Controller
                 $model = new Store();
                 $model->type_id = 1;
                 $model->application_id = intval ($id);
-                $model->created = app::date();
                 $model->save();
             }
             Yii::app()->user->setFlash('status','Заявки перемещены на склад успешно.');

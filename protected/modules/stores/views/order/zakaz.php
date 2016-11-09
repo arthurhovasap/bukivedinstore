@@ -1,8 +1,36 @@
+<div class="hide">
+    <?php $this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'type-grid',
+	'dataProvider'=>$tmp->search(),
+	'filter'=>$tmp,
+	'columns'=>array(
+		'id',
+		'name',
+		'description',
+		'status_id',
+		array(
+			'class'=>'CButtonColumn',
+		),
+	),
+)); ?>
+
+</div>
 <?php
 error_reporting(E_ALL ^ E_NOTICE);
+$limit = 100;
+$page = Yii::app()->request->getQuery('page');
+$prev = $page; 
+$next = $page; 
+if (isset($page)){
+    $tmp_count = ($page)*$limit;
+    $offset = " OFFSET ".$tmp_count;
+}else{
+    $next = 2;
+    $offset = " OFFSET 0 ";
+}
+
 
 $where = '';
-    $limit = 20;
   $sql = "
     SELECT cp.*, z.date_off, z.id AS order_id, z.nomer, z.status, p.title AS paper_title, p.real_type, cm.dateOverShift, mDw.start AS digital_date, m.name AS machine_name, m.place AS machine_place
     FROM calculations_parts AS cp
@@ -20,7 +48,7 @@ $where = '';
     ON mDw.calcPartId = cp.id
     WHERE z.status <= 210 AND z.raschet <> 0 AND z.date_off IS NOT NULL AND z.date_off <> '0000-00-00 00:00:00' AND cp.pages_width <> 0 AND (cp.paper_type = '' OR (cp.paper_type = 'custom' AND cp.paper_list_price > 0)) AND cp.pages_height <> 0 AND cp.lists <> 0 {$where} AND z.date_off >= '2016-06-01 00:00:00'
     ORDER BY mDw.start ASC, cm.dateOverShift ASC, DATE_FORMAT(z.date_off,'%Y-%m-%d') ASC, cp.stock_status ASC
-    LIMIT ".$limit;
+    LIMIT ".$limit.$offset;
     
   $orders = Yii::app()->db->createCommand($sql)->queryAll();
   
@@ -129,7 +157,10 @@ $where = '';
       'kt' => 'КТ',
     );
 ?>
-<table border="1" class="text-nowrap text-center">
+<h1>Заказ бумаги</h1>
+<div id="zakaz-grid" class="grid-view">
+    <div class="summary"><?php echo "Страница ".(($page) ? $page : 1); ?></div>
+<table border="1" class="items /*text-nowrap text-center*/">
     <thead>
         <tr>
             <th>Заказ</th>
@@ -155,7 +186,7 @@ $where = '';
     <tbody>
 <?php
   $parts = array();
-  foreach($orders as $order):
+  foreach($orders as $key => $order):
     if ( in_array($order['id'],$parts) ) continue;
     $parts[] = $order['id'];
     if ( $order['dateOverShift'] )
@@ -186,9 +217,9 @@ $where = '';
     }
     $companies = array_keys($companies);
 ?>
-  <tr id="<?php echo $order['id'] ?>" zakaz_id = "<?php echo $order['order_id'] ?>">
+<tr id="<?php echo $order['id'] ?>" zakaz_id = "<?php echo $order['order_id'] ?>" class="<?php echo app::classOddEven($key); ?>">
     <td><?php echo $order['nomer'].($date ? ($order['dateOverShift'] ? ' (О)' : ' (Ц)') : '') ?></td>
-    <td class="<?php echo project_status_class($order['status']) ?>"><?php echo textstatus($order['status']) ?></td>
+    <td class="<?php echo project_status_class($order['status']) ?> status-statuation"><?php echo textstatus($order['status']) ?></td>
     <td><?php echo date_create($order['date_in'])->format('Y-m-d'); ?></td>
     <td><?php echo date_create($order['date_off'])->format('Y-m-d') ?></td>
     <td><?php echo $order['paper_type'] ? 'Дизайнерская' : "{$paper_names[$order['real_type']]} {$order['paper_title']}" ?></td>
@@ -202,10 +233,22 @@ $where = '';
     <td><?php echo $order['lists_price']-$order['lists_min_price'] ?></td>
     <td><?php echo $order['machine_name'] ? "{$order['machine_name']} ({$places[$order['machine_place']]})" : 'Без печати' ?></td>
     <td>
-        <?php echo CHtml::link("Заказать", array("application/create", "code"=>$order['order_id'])); ?>
+        <?php echo CHtml::link("Заказать", array("application/create", "code"=>$order['order_id']), array('class'=>'add-to-store-fin btn status-statuation '.project_status_class($order['status']))); ?>
     </td>
   </tr>
 <?php endforeach; ?>
   </tbody>
 </table>
-<span class="text-right text-info">1 2 3 4 ... n</span>
+</div>
+<div class="pager">
+    <ul class="yiiPager">
+        <?php if ($prev) :?>
+        <li class="previous"><?php echo CHtml::link("Предыдущая", array("/stores/order/zakaz", "page"=>($prev) ? --$prev : 1)) ?></li>
+        <?php endif; ?>
+        <?php if ($next) {?>
+            <li class="next"><?php echo CHtml::link("Следующий", array("/stores/order/zakaz", "page"=>($next) ? ++$next : 2)) ?></li>
+        <?php } else { ?>
+            <li class="next"><?php echo CHtml::link("Следующий", array("/stores/order/zakaz", "page"=>2)); ?></li>
+        <?php } ?>
+    </ul>
+</div>

@@ -3,16 +3,11 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Types',
-);
-
-$this->menu=array(
-	array('label'=>'Create Type', 'url'=>array('create')),
-	array('label'=>'Manage Type', 'url'=>array('admin')),
+	'Склады',
 );
 ?>
 
-<h1>Склады</h1>
+<h1 class="text-center">Склады</h1>
 <div class="col-md-12">
     <div class="col-md-12 text-center font h1 viewstore viewstore0">
         <?php echo CHtml::link("Заявки", array('application/admin')); ?>

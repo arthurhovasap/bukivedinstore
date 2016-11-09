@@ -7,6 +7,8 @@ $this->breadcrumbs=array(
 	$model->name,
 );
 
+$id = Yii::app()->request->getQuery('id');
+
 /*$this->menu=array(
 	array('label'=>'List Type', 'url'=>array('index')),
 	array('label'=>'Create Type', 'url'=>array('create')),
@@ -20,7 +22,7 @@ $this->breadcrumbs=array(
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'application-grid',
-	'dataProvider'=>$models->search(),
+	'dataProvider'=>$models->searchbytype($id),
 	'filter'=>$models,
         'afterAjaxUpdate' => 'reinstallDatePicker', // (#1)
         'pagerCssClass' => 'pagination pull-right',
@@ -110,7 +112,7 @@ $this->breadcrumbs=array(
                     'value'=>'$data->application->count',
                     'type'=>'html',
                     'filter'=>false,
-                    //'footer'=>($model->uniqueCount($model->search()->getKeys())) ? $model->getTotals($model->search()->getKeys()) : "",
+                    //'footer'=>($models->uniqueCount($models->searchbytype($id)->getKeys())) ? $models->getTotals($models->searchbytype($id)->getKeys()) : "",
                 ),
 		array(
 			'class'=>'CButtonColumn',

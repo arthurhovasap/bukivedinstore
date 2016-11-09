@@ -302,9 +302,11 @@ class Application extends CActiveRecord {
                 return "";
             }
         }else{
+            $idcommand = $connection->createCommand("SELECT `t`.`id` FROM `isystems_store` t WHERE `t`.`application_id` in (".implode(",", $ids).")");
+            $id = $idcommand->queryScalar();
             return CHtml::link(
                 'На складе',
-                array('application/onstore','ids'=>$ids),
+                array('store/view','id'=>$id),
                 array('confirm' => 'Посмотреть детали?', 'class'=>'add-to-store-fin btn btn-success')
             );
         }

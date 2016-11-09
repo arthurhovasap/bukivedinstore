@@ -42,12 +42,12 @@ class Store extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('application_id, created, type_id', 'required'),
+			array('application_id, type_id', 'required'),
 			array('application_id, count, type_id', 'numerical', 'integerOnly'=>true),
-			array('note', 'length', 'max'=>255),
+			array('note, created', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, application_id, created, updated, count, type_id, note, created_to, created_from, paper_id, width, height, acount, state_id, nomer_search', 'safe', 'on'=>'search'),
+			array('id, application_id, created, updated, count, type_id, note, created_to, created_from, paper_id, width, height, acount, state_id, nomer_search', 'safe', 'on'=>'search, searchbytype'),
 		);
 	}
 
@@ -71,15 +71,20 @@ class Store extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'application_id' => 'Application',
-			'created' => 'Created',
+			'application_id' => 'Заявка',
+			'created' => 'Создан',
                         'created_from' => 'Дата с',
                         'created_to' => 'Дата до',
-			'updated' => 'Updated',
-			'count' => 'Count',
-			'type_id' => 'Type',
-                        'paper_id' => 'Paper',
-			'note' => 'Note',
+			'updated' => 'Обновлен',
+			'count' => 'Колл',
+			'type_id' => 'Склад',
+                        'paper_id' => 'Бумага',
+			'note' => 'Заметка',
+                        'nomer_search' => 'Заказ',
+                        'height'=>'Высота',
+                        'width'=>'Ширина',
+                        'acount'=>'Колл',
+                        'state_id'=>'Состояние'
 		);
 	}
 
@@ -139,6 +144,52 @@ class Store extends CActiveRecord
                     ),
                 ));
 	}
+        
+        public function searchbytype($id)
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+                
+                $criteria->condition = "type_id=".$id;
+                
+                if(!empty($this->created_from) && !empty($this->created_to)){
+                    $criteria->addBetweenCondition('t.created', date('Y-m-d', strtotime('0 day', strtotime($this->created_from))), date('Y-m-d', strtotime('1 day', strtotime($this->created_to))), 'AND');
+                }else{
+                    $criteria->compare('t.created', $this->created, true);
+                }
+        
+		$criteria->compare('t.id',$this->id);
+		$criteria->compare('t.application_id',$this->application_id);
+		
+		$criteria->compare('t.updated',$this->updated,true);
+		$criteria->compare('t.count',$this->count);
+		$criteria->compare('t.type_id',$this->type_id);
+		$criteria->compare('t.note',$this->note,true);
+
+                
+                $criteria->with = array('application');
+                $criteria->compare('application.paper_id', $this->paper_id, true);
+                $criteria->compare('application.state_id', $this->state_id, true);
+                $criteria->compare('application.width', $this->width, true);
+                $criteria->compare('application.height', $this->height, true);
+                $criteria->compare('application.count', $this->acount, true);
+                $criteria->compare('application.code', $this->nomer_search);
+        
+		return new CActiveDataProvider($this, array(
+                    'criteria' => $criteria,
+                    'sort' => array(
+                        'defaultOrder' => 't.id DESC',
+                        'attributes' => array(
+                            
+                            '*',
+                        ),
+                    ),
+                    'pagination' => array (
+                        'PageSize' => 50 //edit your number items per page here
+                    ),
+                ));
+	}
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -150,4 +201,17 @@ class Store extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        protected function beforeSave() {
+        if (parent::beforeSave()) {
+            if ($this->isNewRecord) {
+                $this->created = app::date();
+            } else {
+                $this->updated = app::date();
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

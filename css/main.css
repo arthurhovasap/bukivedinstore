@@ -105,6 +105,13 @@ body{
     background: lightgray;
 }
 
+.status-statuation{
+    font-weight: bold;
+    color: white !important;
+    text-align: center;
+    font-size: 11px !important;
+    border-radius: 5px;
+}
 .status-waiting   { color:#000; background-color:#EE82EE !important; }
 .status-cancelled { color:#000; background-color:#EE82EE !important; }
 .status-prepress  { color:#000; background-color:#F00 !important;    }
@@ -199,14 +206,16 @@ legend.scheduler-border {
     color: #555;
 }
 
-#application-grid.grid-view tbody .btn{
+#application-grid.grid-view tbody .btn,
+#zakaz-grid.grid-view tbody .btn{
     width: 89px;
     padding: 2px 10px;
     font-size: 89%;
     border-radius: 2px;
 } 
 
-#application-grid.grid-view tbody tr td:nth-last-child(2){
+#application-grid.grid-view tbody tr td:nth-last-child(2),
+#zakaz-grid.grid-view tbody tr td:nth-last-child(1){
     padding: 0px;
 } 
 
@@ -221,4 +230,9 @@ legend.scheduler-border {
 
 .cursor-default{
     cursor: default;
+}
+
+ul.yiiPager a:link, ul.yiiPager a:visited {
+    border-radius: 0px !important;
+    padding: 5px 14px !important;
 }

@@ -32,7 +32,7 @@
                                         'items' => array(
                                             array('label' => 'Главная', 'url' => array('/stores')),
                                             array('label' => '', 'url' => array('#'), 'itemOptions'=>array('role'=>'separator', 'class'=>'divider')),
-                                            array('label' => 'Заказы', 'url' => array('/stores/order/zakaz')),
+                                            array('label' => 'Заказ бумаги', 'url' => array('/stores/order/zakaz')),
                                             array('label' => '', 'url' => array('#'), 'itemOptions'=>array('role'=>'separator', 'class'=>'divider')),
                                             array('label' => 'Все Заявки', 'url' => array('/stores/application/admin')),
                                             array('label' => 'Создать заявку', 'url' => array('/stores/application/create')),

@@ -1,6 +1,6 @@
 <?php
 
-class OrderController extends Controller
+class StoreController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -28,7 +28,7 @@ class OrderController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'zakaz'),
+				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -62,14 +62,14 @@ class OrderController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Order;
+		$model=new Store;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Order']))
+		if(isset($_POST['Store']))
 		{
-			$model->attributes=$_POST['Order'];
+			$model->attributes=$_POST['Store'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -91,9 +91,9 @@ class OrderController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Order']))
+		if(isset($_POST['Store']))
 		{
-			$model->attributes=$_POST['Order'];
+			$model->attributes=$_POST['Store'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -122,7 +122,7 @@ class OrderController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Order');
+		$dataProvider=new CActiveDataProvider('Store');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -133,10 +133,10 @@ class OrderController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Order('search');
+		$model=new Store('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Order']))
-			$model->attributes=$_GET['Order'];
+		if(isset($_GET['Store']))
+			$model->attributes=$_GET['Store'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -147,12 +147,12 @@ class OrderController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Order the loaded model
+	 * @return Store the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Order::model()->findByPk($id);
+		$model=Store::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -160,28 +160,14 @@ class OrderController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Order $model the model to be validated
+	 * @param Store $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='order-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='store-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
-	}
-        
-        public function actionZakaz()
-	{
-                $tmp=new Type('search');
-		$tmp->unsetAttributes();  // clear any default values
-		if(isset($_GET['Type']))
-			$tmp->attributes=$_GET['Type'];
-
-                $model = new CalculationsParts();
-		$this->render('zakaz',array(
-			'model'=>$model,
-                        'tmp'=>$tmp
-		));
 	}
 }

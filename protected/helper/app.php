@@ -60,4 +60,8 @@ class app {
     }
     
     public static $void0 = "javascript:void(0);";
+    
+    public static function classOddEven($key){
+        return ($key % 2) ? "odd" : "even";
+    }
 }

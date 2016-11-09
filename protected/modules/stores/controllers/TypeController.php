@@ -52,7 +52,7 @@ class TypeController extends Controller
 	public function actionView($id)
 	{
                 $model = $this->loadModel($id);
-                $models=new Store('search');
+                $models=new Store('searchbytype');
 		$models->unsetAttributes();  // clear any default values
 		if(isset($_GET['Store']))
 			$models->attributes=$_GET['Store'];
