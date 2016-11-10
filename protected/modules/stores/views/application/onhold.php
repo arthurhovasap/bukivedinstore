@@ -5,17 +5,19 @@
 $this->breadcrumbs=array(
         'Модули'=>array('/modules'),
         'Склады'=>array('/stores'),
-        'Управление заявками',
+        'Все заявки'=>array('/stores/application/admin'),
+        'Заявки в ожидании',
 );
 
-$this->pageTitle = "Управление заявками";
+$this->pageTitle = "Управление заявками в ожидании";
 
 $this->menu=array(
         array('label'=>'Создать заявку', 'url'=>array('create')),
+	array('label'=>'Управлять заявками', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Управление заявками</h1>
+<h1 class="h1">Заявки в ожидании</h1>
 
 <?php if(Yii::app()->user->hasFlash('status')): ?>
 
@@ -27,14 +29,10 @@ $this->menu=array(
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'application-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$model->search_onhold(),
 	'filter'=>$model,
-        'afterAjaxUpdate' => 'reinstallDatePicker', // (#1)
         'pagerCssClass' => 'pagination pull-right',
-        'rowCssClassExpression'=>'
-            ( $data->statusClassGenerator() ) .
-            ( $row%2 ? $this->rowCssClass[1] : $this->rowCssClass[0] )
-        ',
+        'afterAjaxUpdate' => 'reinstallDatePicker',
 	'columns'=>array(
 		array( 
                     'name' => 'id',
@@ -69,11 +67,7 @@ $this->menu=array(
                     'type' => 'raw',
                     'value' => '$data->width==null ? "" : Chtml::link($data->width, app::$void0, array("class" => "widthSelector", "data-id" => $data->width, "onclick"=>"clickonewidth(this)"))',
                 ),
-                /*array(
-                        'name' => 'created',
-                        'value' => 'Chtml::link(app::datetimeUserFriendly(CHtml::encode($data->created)), array("date", "id" => app::dateTimeByFormat($data->created, "Y-m-d")))',
-                        'type' => 'html'
-                ),*/
+
                 array(
                         'name' => 'created_from',
                         'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), app::$void0, array("class" => "created_fromSelector", "data-id" => app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), "onclick"=>"clickonecreated_from(this)"))',
@@ -123,25 +117,26 @@ $this->menu=array(
                             )
                         ), 
                         true), // (#4)
-                ),         
+                ),
+         
                 array(
                     'name'=>'count',
                     'value'=>'$data->count',
                     'type'=>'html',
                     'filter'=>false,
-                    'footer'=>($model->uniqueCount($model->search()->getKeys())) ? $model->getTotals($model->search()->getKeys()) : "",
+                    'footer'=>($model->uniqueCount($model->search_onhold()->getKeys())) ? $model->getTotals($model->search_onhold()->getKeys()) : "",
                 ),
             
                 array(
                     'name'=>'status_id',
                     'value'=>'$data->buttonByStatus(array($data->id))',
                     'type'=>'raw',
-                    'filter' => CHtml::activeDropDownList($model, 'status_id', array_combine(array_values(array("", "3", "1")), array("Все", "Новые", "В ожидании")), array('style' => 'width: 82px;')),
+                    'filter'=>false
                 ),
                             
 		array(
 			'class'=>'CButtonColumn',
-                        'footer'=>$model->buttonByStatus($model->search()->getKeys())
+                        'footer'=>$model->buttonByStatus($model->search_onhold()->getKeys())
 		),
 	),
 )); 

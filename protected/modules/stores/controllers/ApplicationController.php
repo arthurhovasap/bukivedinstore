@@ -28,7 +28,7 @@ class ApplicationController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index', 'view', 'code', 'paper', 'date', 'changestatus', 'fillstore'),
+				'actions'=>array('index', 'view', 'code', 'paper', 'date', 'changestatus', 'fillstore', 'state', 'role', 'list', 'onhold', 'forstore'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -185,19 +185,14 @@ class ApplicationController extends Controller
 	{
                 $id = CHtml::encode($id);
                 $model = Zakaz::model()->findByPk($id);
-                    if ($model){
-                    $dataProvider=new CActiveDataProvider('Application', array(
-                        'criteria'=>array(
-                            'condition'=>'code='.$id,
-                            'order'=>'created DESC',
-                        ),
-                        'pagination'=>array(
-                            'pageSize'=>20,
-                        ),
-                    ));
+                if ($model){
+                    $models=new Application('search_by_code');
+                    $models->unsetAttributes();  // clear any default values
+                    if(isset($_GET['Application']))
+                            $models->attributes=$_GET['Application'];
 
                     $this->render('code',array(
-                            'dataProvider'=>$dataProvider,
+                            'models'=>$models,
                             'model' => $model
                     ));
                 }else{
@@ -205,54 +200,74 @@ class ApplicationController extends Controller
                 }
 	}
         
-        /**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
+        public function actionForstore()
+	{
+                $models=new Application('search_by_code');
+                $models->unsetAttributes();  // clear any default values
+                if(isset($_GET['Application']))
+                        $models->attributes=$_GET['Application'];
+
+                $this->render('forstore',array(
+                        'models'=>$models,
+                ));
+	}
+        
 	public function actionPaper($id)
 	{
                 $id = CHtml::encode($id);
                 $model = Paper::model()->findByPk($id);
                 if ($model){
                     $this->pageTitle = $model->fullInfo . app::params('c');
-                    $dataProvider=new CActiveDataProvider('Application', array(
-                        'criteria'=>array(
-                            'condition'=>'paper_id='.$id,
-                            'order'=>'created DESC',
-                        ),
-                        'pagination'=>array(
-                            'pageSize'=>20,
-                        ),
-                    ));
+                    $models=new Application('search_by_paper');
+                    $models->unsetAttributes();  // clear any default values
+                    if(isset($_GET['Application']))
+                            $models->attributes=$_GET['Application'];
 
                     $this->render('paper',array(
-                            'dataProvider'=>$dataProvider,
+                            'models'=>$models,
                             'model'=>$model
                     ));
                 }else{
                     throw new Exception("Нет такой бумаги", 404);
                 }
-                
 	}
         
-        public function actionDate($id)
+        public function actionList()
 	{
-                $id = CHtml::encode($id);
-                $this->pageTitle = $id . app::params('c');
-                $dataProvider=new CActiveDataProvider('Application', array(
-                    'criteria'=>array(
-                        'condition'=>'created LIKE "%'.$id.'%"',
-                        'order'=>'created DESC',
-                    ),
-                    'pagination'=>array(
-                        'pageSize'=>20,
-                    ),
-                ));
+                $model=new Application('search_by_state');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Application']))
+			$model->attributes=$_GET['Application'];
 
-                $this->render('date',array(
-                        'dataProvider'=>$dataProvider,
-                        'id'=>$id
-                ));          
+                $this->pageTitle = "Заявки листов бумаги";
+		$this->render('list',array(
+			'model'=>$model,
+		));
+	}
+        
+        public function actionRole()
+	{
+                $model=new Application('search_by_state');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Application']))
+			$model->attributes=$_GET['Application'];
+
+                $this->pageTitle = "Заявки рулонов бумаги";
+		$this->render('role',array(
+			'model'=>$model,
+		));
+	}
+        
+        public function actionOnhold()
+	{
+                $model=new Application('search_onhold');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Application']))
+			$model->attributes=$_GET['Application'];
+
+		$this->render('onhold',array(
+			'model'=>$model,
+		));
 	}
         
         public function actionChangestatus(){
@@ -261,7 +276,7 @@ class ApplicationController extends Controller
             $command = $connection->createCommand("UPDATE `isystems_application` t SET `status_id`=1, `updated`='".app::date()."' WHERE `t`.`id` in ($ids)");
             $assoc = $command->execute();
             Yii::app()->user->setFlash('status','Ваша заказ в ожидании.');
-            $this->redirect(array('admin'));
+            $this->redirect(Yii::app()->request->urlReferrer);
         }
         
         public function actionFillstore(){
@@ -273,6 +288,14 @@ class ApplicationController extends Controller
                 $model->save();
             }
             Yii::app()->user->setFlash('status','Заявки перемещены на склад успешно.');
-            $this->redirect(array('admin'));
+            $this->redirect(Yii::app()->request->urlReferrer);
+        }
+        
+        public function actionState($id){
+            $id = CHtml::encode($id);
+            if ($id == 1)
+                $this->redirect(array('role'));
+            else
+                $this->redirect(array('list'));
         }
 }

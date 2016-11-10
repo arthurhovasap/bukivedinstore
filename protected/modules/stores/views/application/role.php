@@ -1,33 +1,27 @@
 <?php
 /* @var $this ApplicationController */
-/* @var $model Application */
+/* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
         'Модули'=>array('/modules'),
         'Склады'=>array('/stores'),
-        'Управление заявками',
+        'Все заявки'=>array('/stores/application/admin'),
+        'Заявки рулонов',
 );
 
-$this->pageTitle = "Управление заявками";
+$this->pageTitle = "Управление заявками рулонов";
 
 $this->menu=array(
         array('label'=>'Создать заявку', 'url'=>array('create')),
+	array('label'=>'Управлять заявками', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Управление заявками</h1>
-
-<?php if(Yii::app()->user->hasFlash('status')): ?>
-
-<div class="flash-success">
-	<?php echo Yii::app()->user->getFlash('status'); ?>
-</div>
-
-<?php endif; ?>
+<h1>Заявки рулонов</h1>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'application-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$model->search_by_state(1),
 	'filter'=>$model,
         'afterAjaxUpdate' => 'reinstallDatePicker', // (#1)
         'pagerCssClass' => 'pagination pull-right',
@@ -52,28 +46,11 @@ $this->menu=array(
                     'type' => 'raw',
                     'filter' => CHtml::listData(Paper::model()->findAll(), 'id', 'fullInfo'),
                 ),
-            
-                array( 
-                    'name' => 'state_id',
-                    'type' => 'raw',
-                    'value' => '$data->state==null ? "Your text here" : Chtml::link($data->state->name, app::$void0, array("class" => "stateSelector", "data-id" => $data->state_id, "onclick"=>"clickonestate(this)"))." ".Chtml::link("<span class=\"glyphicon glyphicon-link\"></span>", array("state", "id" => $data->state_id))',
-                    'filter' => CHtml::listData(State::model()->findAll(), 'id', 'name'),
-                ),
-		array( 
-                    'name' => 'height',
-                    'type' => 'raw',
-                    'value' => '$data->height==null ? "" : Chtml::link($data->height, app::$void0, array("class" => "heightSelector", "data-id" => $data->height, "onclick"=>"clickoneheight(this)"))',
-                ),
                 array( 
                     'name' => 'width',
                     'type' => 'raw',
                     'value' => '$data->width==null ? "" : Chtml::link($data->width, app::$void0, array("class" => "widthSelector", "data-id" => $data->width, "onclick"=>"clickonewidth(this)"))',
                 ),
-                /*array(
-                        'name' => 'created',
-                        'value' => 'Chtml::link(app::datetimeUserFriendly(CHtml::encode($data->created)), array("date", "id" => app::dateTimeByFormat($data->created, "Y-m-d")))',
-                        'type' => 'html'
-                ),*/
                 array(
                         'name' => 'created_from',
                         'value' => 'Chtml::link(app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), app::$void0, array("class" => "created_fromSelector", "data-id" => app::dateTimeByFormat(CHtml::encode($data->created), "d.m.Y"), "onclick"=>"clickonecreated_from(this)"))',
@@ -123,34 +100,34 @@ $this->menu=array(
                             )
                         ), 
                         true), // (#4)
-                ),         
+                ),          
                 array(
                     'name'=>'count',
                     'value'=>'$data->count',
                     'type'=>'html',
                     'filter'=>false,
-                    'footer'=>($model->uniqueCount($model->search()->getKeys())) ? $model->getTotals($model->search()->getKeys()) : "",
+                    'footer'=>($model->uniqueCount($model->search_by_state(1)->getKeys())) ? $model->getTotals($model->search_by_state(1)->getKeys()) : "",
                 ),
             
                 array(
                     'name'=>'status_id',
                     'value'=>'$data->buttonByStatus(array($data->id))',
                     'type'=>'raw',
-                    'filter' => CHtml::activeDropDownList($model, 'status_id', array_combine(array_values(array("", "3", "1")), array("Все", "Новые", "В ожидании")), array('style' => 'width: 82px;')),
+                    'filter' => CHtml::activeDropDownList($model, 'status_id', array_combine(array_values(array("", "3", "1")), array("Все", "Заявки", "В ожидании")), array('style' => 'width: 82px;')),
                 ),
                             
 		array(
 			'class'=>'CButtonColumn',
-                        'footer'=>$model->buttonByStatus($model->search()->getKeys())
+                        'footer'=>$model->buttonByStatus($model->search_by_state(1)->getKeys())
 		),
 	),
-)); 
-// (#5)
+));  
+
 Yii::app()->clientScript->registerScript('re-install-date-picker', "
 function reinstallDatePicker(id, data) {
     $('#datepicker_for_created_from').datepicker(jQuery.extend({showMonthAfterYear:false},jQuery.datepicker.regional['ru'],{'dateFormat':'dd.mm.yy'}));
     
     $('#datepicker_for_created_to').datepicker(jQuery.extend({showMonthAfterYear:false},jQuery.datepicker.regional['ru'],{'dateFormat':'dd.mm.yy'}));
 }
-");                    
+");  
 ?>

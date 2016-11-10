@@ -6,11 +6,10 @@ $this->breadcrumbs=array(
         'Модули'=>array('/modules'),
         'Склады'=>array('/stores'),
         'Все заявки'=>array('/stores/application/admin'),
-        'Заказ',
-        $model->nomer
+        'Заявки без заказа',
 );
 
-$this->pageTitle = "Управление заявками заказа ".$model->nomer;
+$this->pageTitle = "Управление заявками без заказа";
 
 $this->menu=array(
         array('label'=>'Создать заявку', 'url'=>array('create')),
@@ -18,11 +17,11 @@ $this->menu=array(
 );
 ?>
 
-<h1>Заявки на заказ «<?php echo $model->nomer; ?>»</h1>
+<h1>Заявки без заказа</h1>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'application-grid',
-	'dataProvider'=>$models->search_by_code($model->id),
+	'dataProvider'=>$models->search_by_code(NULL),
 	'filter'=>$models,
         'pagerCssClass' => 'pagination pull-right',
         'rowCssClassExpression'=>'
@@ -45,7 +44,7 @@ $this->menu=array(
                 array( 
                     'name' => 'state_id',
                     'type' => 'raw',
-                    'value' => '$data->state==null ? "Your text here" : Chtml::link($data->state->name, app::$void0, array("class" => "stateSelector", "data-id" => $data->state_id, "onclick"=>"clickonestate(this)"))',
+                    'value' => '$data->state==null ? "Your text here" : Chtml::link($data->state->name, app::$void0, array("class" => "stateSelector", "data-id" => $data->state_id, "onclick"=>"clickonestate(this)"))." ".Chtml::link("<span class=\"glyphicon glyphicon-link\"></span>", array("state", "id" => $data->state_id))',
                     'filter' => CHtml::listData(State::model()->findAll(), 'id', 'name'),
                 ),
 		array( 
@@ -67,30 +66,20 @@ $this->menu=array(
                 array(
                     'name'=>'count',
                     'value'=>'$data->count',
-                    'filter'=>false,
                     'type'=>'html',
-                    'footer'=>($models->uniqueCount($models->search_by_code($model->id)->getKeys())) ? $models->getTotals($models->search_by_code($model->id)->getKeys()) : "",
+                    'filter'=>false,
                 ),
             
                 array(
                     'name'=>'status_id',
                     'value'=>'$data->buttonByStatus(array($data->id))',
                     'type'=>'raw',
-                    'filter' => CHtml::activeDropDownList($models, 'status_id', array_combine(array_values(array("", "3", "1")), array("Все", "Новые", "В ожидании")), array('style' => 'width: 82px;')),
+                    'filter' => CHtml::activeDropDownList($models, 'status_id', array_combine(array_values(array("", "3", "1")), array("Все", "Заявки", "В ожидании")), array('style' => 'width: 82px;')),
                 ),
                             
 		array(
 			'class'=>'CButtonColumn',
-                        'footer'=>$models->buttonByStatus($models->search_by_code($model->id)->getKeys())
 		),
 	),
 ));                    
 ?>
-
-<div class="col-md-12">
-    <?php 
-        $code = app::getParam('id');
-        if (isset($code))
-            print(file_get_contents("http://wfpi.ru/modules/zakaz/storeinfo.php?id=".$code));
-    ?>
-</div>

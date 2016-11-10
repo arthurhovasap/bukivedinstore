@@ -156,10 +156,34 @@ legend.scheduler-border {
     background: lightgreen;
 }
 
-.viewstore a{
+.viewstore>a{
     display: block;
     padding: 50px;
     font-weight: bold;
+}
+
+.viewstorebystate{
+    padding: 20px;
+}
+
+.viewstorebystate1{
+    background: yellow;
+    border-radius: 10px 0px 0px 0px;
+    border-right: 1px solid black;
+}
+
+.viewstorebystate2{
+    background: #CCFF99;
+}
+
+.viewstorebystate3{
+    background: #D0E3EF;
+}
+
+.viewstorebystate4{
+    background: #EE82EE;
+    border-radius: 0px 10px 0px 0px;
+    border-left: 1px solid black;
 }
 
 .viewstore a:hover{

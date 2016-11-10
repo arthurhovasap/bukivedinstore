@@ -45,9 +45,13 @@ $this->menu=array(
                 array(
                     'label' => $model->getAttributeLabel('created'),
                     'type' => 'raw',
-                    'value' => CHtml::link(app::datetimeUserFriendly($model->created), array('date', 'id' => app::dateTimeByFormat($model->created, "Y-m-d"))),
+                    'value' => app::datetimeUserFriendly($model->created),
                 ),
-                'updated',
+                array(
+                    'label' => $model->getAttributeLabel('updated'),
+                    'type' => 'raw',
+                    'value' => app::datetimeUserFriendly($model->updated),
+                ),
                 'note',
 	),
 )); ?>

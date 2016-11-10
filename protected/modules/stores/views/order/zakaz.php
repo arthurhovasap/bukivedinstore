@@ -1,3 +1,16 @@
+<?php 
+$this->breadcrumbs=array(
+        'Модули'=>array('/modules'),
+        'Склады'=>array('/stores'),
+        'Заказ бумаги',
+);
+
+$this->pageTitle = "Заказ бумаги";
+
+$this->menu=array(
+        array('label'=>'Создать заявку', 'url'=>array('create')),
+);
+?>
 <div class="hide">
     <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'type-grid',
@@ -25,7 +38,6 @@ if (isset($page)){
     $tmp_count = ($page)*$limit;
     $offset = " OFFSET ".$tmp_count;
 }else{
-    $next = 2;
     $offset = " OFFSET 0 ";
 }
 
@@ -243,10 +255,10 @@ $where = '';
 <div class="pager">
     <ul class="yiiPager">
         <?php if ($prev) :?>
-        <li class="previous"><?php echo CHtml::link("Предыдущая", array("/stores/order/zakaz", "page"=>($prev) ? --$prev : 1)) ?></li>
+        <li class="previous"><?php echo ($prev != 2) ? CHtml::link("Предыдущая", array("/stores/order/zakaz", "page"=>($prev) ? --$prev : 1)) : CHtml::link("Предыдущая", array("/stores/order/zakaz")); ?></li>
         <?php endif; ?>
         <?php if ($next) {?>
-            <li class="next"><?php echo CHtml::link("Следующий", array("/stores/order/zakaz", "page"=>($next) ? ++$next : 2)) ?></li>
+            <li class="next"><?php echo CHtml::link("Следующий", array("/stores/order/zakaz", "page"=>++$next)) ?></li>
         <?php } else { ?>
             <li class="next"><?php echo CHtml::link("Следующий", array("/stores/order/zakaz", "page"=>2)); ?></li>
         <?php } ?>

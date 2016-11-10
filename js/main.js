@@ -32,6 +32,6 @@ function clickonecreated_to(_this) {
 }
 
 function clickonenomer(_this) {
-    $('input[name="Store[nomer_search]"]').val($(_this).attr('data-id')).trigger('change');
+    $('input[name="Store[nomer_search]"], input[name="Application[nomer_search]"]').val($(_this).attr('data-id')).trigger('change');
     return false;
 }

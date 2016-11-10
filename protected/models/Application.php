@@ -49,7 +49,7 @@ class Application extends CActiveRecord {
             array('description', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, code, note, count, paper_id, height, width, mass, created, updated, nomer_search, created_from, status_id, total_count, created_to, paper_search, summary', 'safe', 'on' => 'search, search_fin'),
+            array('id, code, note, count, paper_id, height, width, mass, created, updated, nomer_search, created_from, status_id, total_count, created_to, paper_search, summary', 'safe', 'on' => 'search, search_fin, search_by_paper, search_by_code, search_onhold, search_by_state'),
         );
     }
 
@@ -201,7 +201,198 @@ class Application extends CActiveRecord {
             ),
         ));
     }
+    
+    public function search_by_code($code) {
+        // @todo Please modify the following code to remove attributes that should not be searched.
 
+        $criteria = new CDbCriteria;
+        if ($code)
+            $criteria->condition = "t.code = ".$code;
+        else
+            $criteria->condition = "t.code IS NULL ";
+        if(!empty($this->created_from) && !empty($this->created_to)){
+            $criteria->addBetweenCondition('t.created', date('Y-m-d', strtotime('0 day', strtotime($this->created_from))), date('Y-m-d', strtotime('1 day', strtotime($this->created_to))), 'AND');
+        }else{
+            $criteria->compare('t.created', $this->created, true);
+        }
+        $criteria->compare('t.id', $this->id);
+        $criteria->compare('t.code', $this->code, true);
+        $criteria->compare('t.note', $this->note, true);
+        $criteria->compare('t.count', $this->count);
+        $criteria->compare('t.paper_id', $this->paper_id);
+        $criteria->compare('t.state_id', $this->state_id);
+        $criteria->compare('t.status_id', $this->status_id);
+        $criteria->compare('t.height', $this->height, true);
+        $criteria->compare('t.width', $this->width, true);
+        $criteria->compare('t.mass', $this->mass);
+
+        $criteria->with = array('zakaz', 'paper');
+        $criteria->compare('zakaz.nomer', $this->nomer_search, true);
+        $criteria->compare('paper.title', $this->paper_search, true);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => 't.id DESC',
+                'attributes' => array(
+                    'nomer_search' => array(
+                        'asc' => 'nomer',
+                        'desc' => 'nomer DESC',
+                    ),
+                    'paper_search' => array(
+                        'asc' => 'title',
+                        'desc' => 'title DESC',
+                    ),
+                    '*',
+                ),
+            ),
+            'pagination' => array (
+                'PageSize' => 50 //edit your number items per page here
+            ),
+        ));
+    }
+    
+    public function search_by_paper($id) {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+
+        $criteria = new CDbCriteria;
+        $criteria->condition = "t.paper_id = ".$id;
+        if(!empty($this->created_from) && !empty($this->created_to)){
+            $criteria->addBetweenCondition('t.created', date('Y-m-d', strtotime('0 day', strtotime($this->created_from))), date('Y-m-d', strtotime('1 day', strtotime($this->created_to))), 'AND');
+        }else{
+            $criteria->compare('t.created', $this->created, true);
+        }
+        $criteria->compare('t.id', $this->id);
+        $criteria->compare('t.code', $this->code, true);
+        $criteria->compare('t.note', $this->note, true);
+        $criteria->compare('t.count', $this->count);
+        $criteria->compare('t.paper_id', $this->paper_id);
+        $criteria->compare('t.state_id', $this->state_id);
+        $criteria->compare('t.status_id', $this->status_id);
+        $criteria->compare('t.height', $this->height, true);
+        $criteria->compare('t.width', $this->width, true);
+        $criteria->compare('t.mass', $this->mass);
+
+        $criteria->with = array('zakaz', 'paper');
+        $criteria->compare('zakaz.nomer', $this->nomer_search, true);
+        $criteria->compare('paper.title', $this->paper_search, true);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => 't.id DESC',
+                'attributes' => array(
+                    'nomer_search' => array(
+                        'asc' => 'nomer',
+                        'desc' => 'nomer DESC',
+                    ),
+                    'paper_search' => array(
+                        'asc' => 'title',
+                        'desc' => 'title DESC',
+                    ),
+                    '*',
+                ),
+            ),
+            'pagination' => array (
+                'PageSize' => 50 //edit your number items per page here
+            ),
+        ));
+    }
+    
+    public function search_by_state($id) {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+
+        $criteria = new CDbCriteria;
+        $criteria->condition = "t.state_id = ".$id;
+        if(!empty($this->created_from) && !empty($this->created_to)){
+            $criteria->addBetweenCondition('t.created', date('Y-m-d', strtotime('0 day', strtotime($this->created_from))), date('Y-m-d', strtotime('1 day', strtotime($this->created_to))), 'AND');
+        }else{
+            $criteria->compare('t.created', $this->created, true);
+        }
+        $criteria->compare('t.id', $this->id);
+        $criteria->compare('t.code', $this->code, true);
+        $criteria->compare('t.note', $this->note, true);
+        $criteria->compare('t.count', $this->count);
+        $criteria->compare('t.paper_id', $this->paper_id);
+        $criteria->compare('t.state_id', $this->state_id);
+        $criteria->compare('t.status_id', $this->status_id);
+        $criteria->compare('t.height', $this->height, true);
+        $criteria->compare('t.width', $this->width, true);
+        $criteria->compare('t.mass', $this->mass);
+
+        $criteria->with = array('zakaz', 'paper');
+        $criteria->compare('zakaz.nomer', $this->nomer_search, true);
+        $criteria->compare('paper.title', $this->paper_search, true);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => 't.id DESC',
+                'attributes' => array(
+                    'nomer_search' => array(
+                        'asc' => 'nomer',
+                        'desc' => 'nomer DESC',
+                    ),
+                    'paper_search' => array(
+                        'asc' => 'title',
+                        'desc' => 'title DESC',
+                    ),
+                    '*',
+                ),
+            ),
+            'pagination' => array (
+                'PageSize' => 50 //edit your number items per page here
+            ),
+        ));
+    }
+    
+    public function search_onhold() {
+        $criteria = new CDbCriteria;
+        $criteria->condition = "t.status_id = 1";
+        if(!empty($this->created_from) && !empty($this->created_to)){
+            $criteria->addBetweenCondition('t.created', date('Y-m-d', strtotime('0 day', strtotime($this->created_from))), date('Y-m-d', strtotime('1 day', strtotime($this->created_to))), 'AND');
+        }else{
+            $criteria->compare('t.created', $this->created, true);
+        }
+        $criteria->compare('t.id', $this->id);
+        $criteria->compare('t.code', $this->code, true);
+        $criteria->compare('t.note', $this->note, true);
+        $criteria->compare('t.count', $this->count);
+        $criteria->compare('t.paper_id', $this->paper_id);
+        $criteria->compare('t.state_id', $this->state_id);
+        $criteria->compare('t.status_id', $this->status_id);
+        $criteria->compare('t.height', $this->height, true);
+        $criteria->compare('t.width', $this->width, true);
+        $criteria->compare('t.mass', $this->mass);
+
+        $criteria->addCondition( ' NOT EXISTS (SELECT `id` FROM `isystems_store` isyst WHERE isyst.application_id = t.id)' );
+        
+        $criteria->with = array('zakaz', 'paper');
+        $criteria->compare('zakaz.nomer', $this->nomer_search, true);
+        $criteria->compare('paper.title', $this->paper_search, true);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => 't.id DESC',
+                'attributes' => array(
+                    'nomer_search' => array(
+                        'asc' => 'nomer',
+                        'desc' => 'nomer DESC',
+                    ),
+                    'paper_search' => array(
+                        'asc' => 'title',
+                        'desc' => 'title DESC',
+                    ),
+                    '*',
+                ),
+            ),
+            'pagination' => array (
+                'PageSize' => 50 //edit your number items per page here
+            ),
+        ));
+    }
+    
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
